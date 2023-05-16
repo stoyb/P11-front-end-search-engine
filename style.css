@@ -1,0 +1,60 @@
+body {
+    padding: 0 100px;
+    margin: 0;
+}
+.logo__title {
+    color: #D04F4F;
+    font-size: 36px;
+    font-family: DM Sans;
+    font-weight: 700;
+}
+
+input {
+    background-color: #E7E7E7;
+    font-family: Lato;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.search-icon {
+    float: right;
+    position: relative;
+    bottom: 46px;
+    right: 10px;
+    font-size: 26px;
+}
+
+.chevron-down {
+    position: relative;
+    right:30px;
+}
+
+#bloc-food__input {
+    background-color: #3282F7;
+}
+
+#bloc-machine__input {
+    background-color: #68D9A4;
+}
+
+#bloc-utensils__input {
+    background-color: #ED6454;
+}
+
+#bloc-food__input::placeholder, #bloc-machine__input::placeholder, #bloc-utensils__input::placeholder {
+    color: #FFF;
+    font-family: Lato;
+    font-size: 18px;
+}
+
+.bloc-food__icon, .bloc-machine__icon, .bloc-utensils__icon {
+    color: #FFF;
+    font-size: 18px;
+}
+
+.list-form {
+    display: flex;
+    flex-direction: row;
+    padding-top: 3rem;
+}
+
