@@ -30,21 +30,37 @@
                 <form class="bloc-food">
                     <input id="bloc-food__input" list="bloc-food__list" class="px-4 py-3 w-75 border-0 rounded" placeholder="Ingrédients">
                     <span class="bloc-food__icon chevron-down"><i class="fa-solid fa-chevron-down"></i></span>
-                    <datalist id="bloc-food__list">
-                        <option value="Lait de coco"></option>
-                        <option value="Jus de citron"></option>
-                        <option value="Crème de coco"></option>
-                        <option value="Sucre"></option>
-                        <option value="Thon rouge (ou blanc)"></option>
-                    </datalist>
+                    <ul id="bloc-food__list">
+                        <li value="Lait de coco">Lait de coco</li>
+                        <li value="Jus de citron">Jus de citron</li>
+                        <li value="Crème de coco">Crème de coco</li>
+                        <li value="Sucre">Sucre</li>
+                        <li value="Thon rouge (ou blanc)">Thon rouge (ou blanc)</li>
+                    </ul>
                 </form>
                 <form class="bloc-machine">
-                    <input id="bloc-machine__input" class="px-4 py-3 w-75 border-0 rounded" placeholder="Appareils">
+                    <input id="bloc-machine__input" list="bloc-machine__list" class="px-4 py-3 w-75 border-0 rounded" placeholder="Appareils">
                     <span class="bloc-machine__icon chevron-down"><i class="fa-solid fa-chevron-down"></i></span>
+                    <datalist id="bloc-machine__list">
+                        <option value="Blender"></option>
+                        <option value="Saladier"></option>
+                        <option value="Cocotte"></option>
+                        <option value="Cuiseur de riz"></option>
+                        <option value="Four"></option>
+                        <option value="Casserole"></option>
+                        <option value="Poêle à crêpe"></option>
+                        <option value="Sauteuse"></option>
+                        <option value="Mixer"></option>
+                        <option value="Poêle"></option>
+                        <option value="Moule à charlotte"></option>
+                    </datalist>
                 </form>
                 <form class="bloc-utensils">
-                    <input id="bloc-utensils__input" class="px-4 py-3 w-75 border-0 rounded" placeholder="Ustensiles">
-                    <span class="bloc-utensils__icon chevron-down"><i class="fa-solid fa-chevron-down"></i></span>
+                    <div class="search-container">
+                        <input id="bloc-utensils__input" list="bloc-utensils__list" class="px-4 py-3 w-75 border-0 rounded" placeholder="Ustensiles">
+                        <span class="bloc-utensils__icon chevron-down"><i class="fa-solid fa-chevron-down"></i></span>
+                        <datalist id="bloc-utensils__list"></datalist>
+                    </div>
                 </form>
             </form>
         </div>
@@ -53,5 +69,6 @@
 
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
 </html>
