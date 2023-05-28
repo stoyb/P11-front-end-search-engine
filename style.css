@@ -60,19 +60,18 @@ input {
 
 
 
-.search-container {
-    display: flex;
-    align-items: center;
-  }
 
-  .search-input {
-    width: 300px;
-    height: 30px;
-    padding: 5px;
-    font-size: 16px;
-  }
 
-datalist{
-    background-color: #3282F7;
+#bloc-utensils__list  {
+    background-color: #ED6454;
+    color: #FFF;
+    padding-left: 0;
+    width: 11.5rem;
+    position: relative;
+    bottom: 4px;
 }
 
+
+li {
+    list-style-type: none;
+}
