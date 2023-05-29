@@ -1,14 +1,32 @@
 import { recipes } from "/recipes.js";
+import { recipeFactory } from "/factories.js";
 
-const dataUtensils = ["Cuillère à Soupe", "Presse citron", "Couteau", "Saladier", "Passoire", "Moule à tarte", "Râpe à fromage", "Fourchette", "Casserole", "Moule à gâteaux", "cuillère en bois", "Plat à gratin", "Économe", "Cuillère à melon", "Poêle à frire", "Louche", "Verres", "Fouet", "Rouleau à patisserie", "plaque de cuisson", "cocotte minute", "Bol", "Spatule" ];
-const champRecherche = document.querySelector("#bloc-utensils__input");
-const listeSuggestions = document.querySelector("#bloc-utensils__list");
+const champRechercheIngredients = document.querySelector("#bloc-food__input");
+const listeSuggestionsIngredients = document.querySelector("#bloc-food__list");
+const champRechercheAppliance = document.querySelector("#bloc-machine__input");
+const listeSuggestionsAppliance = document.querySelector("#bloc-machine__list");
+const champRechercheUtensils = document.querySelector("#bloc-utensils__input");
+const listeSuggestionsUtensils = document.querySelector("#bloc-utensils__list");
+const listOfRecipes = document.querySelector(".list-recipes");
+
+let dataIngredients = []; 
+let dataAppliance = [];
+let dataUtensils = [];
+
+// Create the filtered lists of filters 
+let state = {
+    ingredients : dataIngredients,
+    appliance : dataAppliance, 
+    utensils : dataUtensils
+}
+console.log(state.ingredients);
+ 
 
 function getAllIngredients(recipes) {
     const ingredientsAll = [];
     recipes.forEach(recipe => {
         recipe.ingredients.forEach(ingredient => {
-            ingredientsAll.push(ingredient.ingredient);
+            ingredientsAll.push(ingredient.ingredient.toLowerCase());
         });
     });
     
@@ -17,7 +35,7 @@ function getAllIngredients(recipes) {
 function getAllAppliance(recipes) {
     const applianceAll = [];
     recipes.forEach(recipe => {
-        applianceAll.push(recipe.appliance);
+        applianceAll.push(recipe.appliance.toLowerCase());
     });
     
     return applianceAll;
@@ -26,7 +44,7 @@ function getAllUtensils(recipes) {
     const utensilsAll = [];
     recipes.forEach((recipe) => {
         recipe.ustensils.forEach((item) => {
-            utensilsAll.push(item);
+            utensilsAll.push(item.toLowerCase());
         });
     });
     return utensilsAll;
@@ -38,31 +56,34 @@ function filterAllList(list) {
 }
 
 // Factorized function to generate the three filteredLists without occurrences 
-function getAllFilters(getAllItems, recipes){
-    const itemsList = getAllItems(recipes);
+function getUniqueItems(getAFilter, dataList, recipes){
+    const itemsList = getAFilter(recipes);
     const filteredList = filterAllList(itemsList);
-    console.log(itemsList);
-    console.log(filteredList);
+    filteredList.forEach((item) => {
+        dataList.push(item);
+    })
+    return dataList
 }
 
+console.log(getUniqueItems(getAllIngredients, dataIngredients, recipes));
+console.log(getUniqueItems(getAllAppliance, dataAppliance, recipes));
+console.log(getUniqueItems(getAllUtensils, dataUtensils, recipes));
 
 
 
-
-
-function showSuggestions() {
-    const valeurRecherche = champRecherche.value.toLowerCase();
-    listeSuggestions.innerHTML = ""; 
+function showSuggestionsIngredients() {
+    const valeurRecherche = champRechercheIngredients.value.toLowerCase();
+    listeSuggestionsIngredients.innerHTML = ""; 
     
     if (valeurRecherche.length >= 1) {
-        const suggestions = dataUtensils.filter(item =>
+        const suggestions = state.ingredients.filter(item =>
             item.toLowerCase().startsWith(valeurRecherche)
             );
             
             suggestions.forEach(suggestion => {
                 const option = document.createElement("li");
                 option.textContent = suggestion;
-                listeSuggestions.appendChild(option);
+                listeSuggestionsIngredients.appendChild(option);
                 option.addEventListener('click', ()=> {
                     console.log(option.eventvalue);
                 })
@@ -71,9 +92,70 @@ function showSuggestions() {
         }
     }
     
-    champRecherche.addEventListener("input", showSuggestions);
+    function showSuggestionsAppliance() {
+        const valeurRecherche = champRechercheAppliance.value.toLowerCase();
+        listeSuggestionsAppliance.innerHTML = ""; 
+        
+        if (valeurRecherche.length >= 1) {
+            const suggestions = state.appliance.filter(item =>
+                item.toLowerCase().startsWith(valeurRecherche)
+                );
+                
+                suggestions.forEach(suggestion => {
+                    const option = document.createElement("li");
+                    option.textContent = suggestion;
+                    listeSuggestionsAppliance.appendChild(option);
+                    option.addEventListener('click', ()=> {
+                        console.log(option.eventvalue);
+                    })
+                    
+                });
+            }
+        }
+        
+        function showSuggestionsUtensils() {
+            const valeurRecherche = champRechercheUtensils.value.toLowerCase();
+            listeSuggestionsUtensils.innerHTML = ""; 
+            
+            if (valeurRecherche.length >= 1) {
+                const suggestions = state.utensils.filter(item =>
+                    item.toLowerCase().startsWith(valeurRecherche)
+                    );
+                    
+                    suggestions.forEach((suggestion) => {
+                        const option = document.createElement("li");
+                        option.textContent = suggestion;
+                        listeSuggestionsUtensils.appendChild(option);
+                        option.addEventListener('click', ()=> {
+                            console.log(option.eventvalue);
+                        })
+                        
+                });
+            }
+        }
+
+        
+
+function displayRecipes(recipes) {
+    recipes.forEach((recipe)=> {
+        const modelCard = recipeFactory(recipe)
+        const cardRecipe = modelCard.getRecipeCardDOM();
+        listOfRecipes.appendChild(cardRecipe);
+        console.log(recipe);
+    })
+}
+
+displayRecipes(recipes);
+
+
+champRechercheIngredients.addEventListener("input",showSuggestionsIngredients);
+champRechercheAppliance.addEventListener("input",showSuggestionsAppliance);
+champRechercheUtensils.addEventListener("input",showSuggestionsUtensils);
     
-    // Create the filtered lists of filters 
-    getAllFilters(getAllIngredients, recipes);
-    getAllFilters(getAllAppliance, recipes);
-    getAllFilters(getAllUtensils, recipes);
+    
+   
+
+
+    
+
+    

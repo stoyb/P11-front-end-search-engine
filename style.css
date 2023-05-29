@@ -29,15 +29,15 @@ input {
     right:30px;
 }
 
-#bloc-food__input {
+#bloc-food__input, #bloc-food__list {
     background-color: #3282F7;
 }
 
-#bloc-machine__input {
+#bloc-machine__input, #bloc-machine__list {
     background-color: #68D9A4;
 }
 
-#bloc-utensils__input {
+#bloc-utensils__input, #bloc-utensils__list {
     background-color: #ED6454;
 }
 
@@ -62,13 +62,29 @@ input {
 
 
 
-#bloc-utensils__list  {
-    background-color: #ED6454;
+#bloc-food__list, #bloc-machine__list, #bloc-utensils__list  {
+   
     color: #FFF;
     padding-left: 0;
     width: 11.5rem;
     position: relative;
     bottom: 4px;
+}
+
+#bloc-food__list > li:hover {
+    background-color: #76AAF9;
+}
+
+#bloc-machine__list > li:hover {
+    background-color: #9DE7C4;
+}
+
+#bloc-utensils__list > li:hover {
+    background-color: #F39A90;
+}
+
+.list-recipes__card {
+    background-color: #E7E7E7;
 }
 
 
