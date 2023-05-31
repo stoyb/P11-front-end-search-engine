@@ -83,11 +83,56 @@ input {
     background-color: #F39A90;
 }
 
+.list-recipes {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 20px;
+}
+
 .list-recipes__card {
     background-color: #E7E7E7;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    column-gap: 12px;
+    margin: 8px 0;
+    width: 380px;
+    height:186px;
+    padding: 16px;
+     
+}
+.list-recipes__title {
+    order:1;
+    font-size: 13px;
+}
+
+.list-recipes__time {
+    order:2;
+    display: flex;
+    column-gap: 8px;
+    font-size: 13px;
 }
 
 
 li {
     list-style-type: none;
+}
+
+.list-recipes__ingredients {
+    display: grid;
+    order: 3;
+    
+}
+.list-recipes__description{
+    order:4;
+    font-size: 9px;
+}
+
+.ingredient-content {
+    display: flex;
+    font-size: 9px;
+}
+
+.ingredient-content > p {
+    margin-bottom: 0;
 }
