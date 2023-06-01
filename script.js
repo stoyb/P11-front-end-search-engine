@@ -78,6 +78,9 @@ function showAllIngredientsSuggestions(){
             const option = document.createElement("li");
             option.textContent = suggestion;
             listeSuggestionsIngredients.appendChild(option);
+            option.addEventListener('click', function() {
+                alert('hello, world');
+            })
             
         });
     
@@ -89,6 +92,9 @@ function showAllApplianceSuggestions(){
             const option = document.createElement("li");
             option.textContent = suggestion;
             listeSuggestionsAppliance.appendChild(option);
+            option.addEventListener('click', function() {
+                alert('hello, world');
+            })
             
         });
     
@@ -100,6 +106,9 @@ function showAllUtensilsSuggestions(){
             const option = document.createElement("li");
             option.textContent = suggestion;
             listeSuggestionsUtensils.appendChild(option);
+            option.addEventListener('click', function() {
+                alert('hello, world');
+            })
             
         });
     
@@ -120,6 +129,7 @@ function showSuggestionsIngredients() {
                 option.textContent = suggestion;
                 option.classList.add("li-ingredients");
                 listeSuggestionsIngredients.appendChild(option);
+                
                 
                 
             });
