@@ -70,11 +70,43 @@ console.log(getUniqueItems(getAllIngredients, dataIngredients, recipes));
 console.log(getUniqueItems(getAllAppliance, dataAppliance, recipes));
 console.log(getUniqueItems(getAllUtensils, dataUtensils, recipes));
 
+function showAllIngredientsSuggestions(){
+    const dataListItems = state.ingredients;
+        dataListItems.forEach(suggestion => {
+            const option = document.createElement("li");
+            option.textContent = suggestion;
+            listeSuggestionsIngredients.appendChild(option);
+            
+        });
+    
+}
 
+function showAllApplianceSuggestions(){
+    const dataListItems = state.appliance;
+        dataListItems.forEach(suggestion => {
+            const option = document.createElement("li");
+            option.textContent = suggestion;
+            listeSuggestionsAppliance.appendChild(option);
+            
+        });
+    
+}
+
+function showAllUtensilsSuggestions(){
+    const dataListItems = state.utensils;
+        dataListItems.forEach(suggestion => {
+            const option = document.createElement("li");
+            option.textContent = suggestion;
+            listeSuggestionsUtensils.appendChild(option);
+            
+        });
+    
+}
 
 function showSuggestionsIngredients() {
+    
     const valeurRecherche = champRechercheIngredients.value.toLowerCase();
-    listeSuggestionsIngredients.innerHTML = ""; 
+    listeSuggestionsIngredients.innerHTML = " "; 
     
     if (valeurRecherche.length >= 1) {
         const suggestions = state.ingredients.filter(item =>
@@ -86,12 +118,14 @@ function showSuggestionsIngredients() {
                 option.textContent = suggestion;
                 listeSuggestionsIngredients.appendChild(option);
                 option.addEventListener('click', ()=> {
-                    console.log(option.eventvalue);
+                    console.log('hello, world');
                 })
                 
             });
         }
     }
+
+    
     
     function showSuggestionsAppliance() {
         const valeurRecherche = champRechercheAppliance.value.toLowerCase();
@@ -104,36 +138,34 @@ function showSuggestionsIngredients() {
                 
                 suggestions.forEach(suggestion => {
                     const option = document.createElement("li");
+                    option.classList.add("li-appliance");
                     option.textContent = suggestion;
                     listeSuggestionsAppliance.appendChild(option);
-                    option.addEventListener('click', ()=> {
-                        console.log(option.eventvalue);
-                    })
                     
                 });
             }
         }
+
+        
         
         function showSuggestionsUtensils() {
-            const valeurRecherche = champRechercheUtensils.value.toLowerCase();
-            listeSuggestionsUtensils.innerHTML = ""; 
-            
+            const valeurRecherche = document.getElementById('bloc-utensils__input').value.toLowerCase();
+            listeSuggestionsUtensils.innerHTML = "";
+          
             if (valeurRecherche.length >= 1) {
-                const suggestions = state.utensils.filter(item =>
-                    item.toLowerCase().startsWith(valeurRecherche)
-                    );
-                    
-                    suggestions.forEach((suggestion) => {
-                        const option = document.createElement("li");
-                        option.textContent = suggestion;
-                        listeSuggestionsUtensils.appendChild(option);
-                        option.addEventListener('click', ()=> {
-                            console.log(option.eventvalue);
-                        })
-                        
-                });
+              const suggestions = state.utensils.filter(item =>
+                item.toLowerCase().startsWith(valeurRecherche)
+              );
+          
+              suggestions.forEach((suggestion) => {
+                const option = document.createElement("li");
+                option.textContent = suggestion;
+                listeSuggestionsUtensils.appendChild(option);
+              });
             }
-        }
+          }
+          
+          
 
         
         console.log(recipes.ingredients);
@@ -178,11 +210,14 @@ function getRecipes() {
 
 
 
-displayRecipes(recipes);
 champRechercheIngredients.addEventListener("input",showSuggestionsIngredients);
 champRechercheAppliance.addEventListener("input",showSuggestionsAppliance);
 champRechercheUtensils.addEventListener("input",showSuggestionsUtensils);
 searchRecipe.addEventListener("input", getRecipes);
+champRechercheIngredients.addEventListener("click", showAllIngredientsSuggestions);
+champRechercheAppliance.addEventListener('click', showAllApplianceSuggestions);
+champRechercheUtensils.addEventListener('click', showAllUtensilsSuggestions);
+displayRecipes(recipes);
 
    
 
