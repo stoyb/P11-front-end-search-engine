@@ -70,6 +70,8 @@ console.log(getUniqueItems(getAllIngredients, dataIngredients, recipes));
 console.log(getUniqueItems(getAllAppliance, dataAppliance, recipes));
 console.log(getUniqueItems(getAllUtensils, dataUtensils, recipes));
 
+
+// Functions for suggestions filters
 function showAllIngredientsSuggestions(){
     const dataListItems = state.ingredients;
         dataListItems.forEach(suggestion => {
@@ -116,6 +118,7 @@ function showSuggestionsIngredients() {
             suggestions.forEach(suggestion => {
                 const option = document.createElement("li");
                 option.textContent = suggestion;
+                option.classList.add("li-ingredients");
                 listeSuggestionsIngredients.appendChild(option);
                 option.addEventListener('click', ()=> {
                     console.log('hello, world');
@@ -170,17 +173,9 @@ function showSuggestionsIngredients() {
         
         console.log(recipes.ingredients);
 
+
+//        
 function displayRecipes(recipes) {
-    recipes.forEach((recipe)=> {
-        const modelCard = recipeFactory(recipe);
-        const cardRecipe = modelCard.getRecipeCardDOM();
-        listOfRecipes.appendChild(cardRecipe);
-        
-    })
-}
-
-
-function displayRecipesFiltered(recipes) {
     recipes.forEach((recipe)=> {
         const modelCard = recipeFactory(recipe);
         const cardRecipe = modelCard.getRecipeCardDOM();
@@ -200,7 +195,7 @@ function getRecipes() {
             item.name.toLowerCase().startsWith(valeurRecherche)
             );
         listOfRecipes.innerHTML = " ";
-        displayRecipesFiltered(suggestions);
+        displayRecipes(suggestions);
     } 
 }
 
