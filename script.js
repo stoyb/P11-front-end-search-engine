@@ -1,5 +1,5 @@
 import { recipes } from "/recipes.js";
-import { recipeFactory } from "/factories.js";
+import { recipeFactory } from "/recipeCard.js";
 
 const champRechercheIngredients = document.querySelector("#bloc-food__input");
 const listeSuggestionsIngredients = document.querySelector("#bloc-food__list");
@@ -120,9 +120,7 @@ function showSuggestionsIngredients() {
                 option.textContent = suggestion;
                 option.classList.add("li-ingredients");
                 listeSuggestionsIngredients.appendChild(option);
-                option.addEventListener('click', ()=> {
-                    console.log('hello, world');
-                })
+                
                 
             });
         }
