@@ -136,3 +136,9 @@ li {
 .ingredient-content > p {
     margin-bottom: 0;
 }
+
+.filter-button {
+    background-color: #3282F7;
+    color: #FFF;
+    display: inline-block;
+}

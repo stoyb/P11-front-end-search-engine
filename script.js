@@ -9,7 +9,7 @@ const champRechercheUtensils = document.querySelector("#bloc-utensils__input");
 const listeSuggestionsUtensils = document.querySelector("#bloc-utensils__list");
 const listOfRecipes = document.querySelector(".list-recipes");
 const searchRecipe = document.querySelector("#search-recipe___input");
-
+const listFilters = document.querySelector('.list-filters');
 let dataIngredients = []; 
 let dataAppliance = [];
 let dataUtensils = [];
@@ -73,13 +73,37 @@ console.log(getUniqueItems(getAllUtensils, dataUtensils, recipes));
 
 // Functions for suggestions filters
 function showAllIngredientsSuggestions(){
-    const dataListItems = state.ingredients;
+    let dataListItems = state.ingredients;
         dataListItems.forEach(suggestion => {
             const option = document.createElement("li");
             option.textContent = suggestion;
             listeSuggestionsIngredients.appendChild(option);
+            function findWordInObject(obj, word) {
+                const result = [];
+              
+                Object.values(obj).forEach(value => {
+                  if (typeof value === "string" && value.includes(word)) {
+                    result.push(value);
+                  }
+                });
+                return result;
+              }
+              const findAWord = findWordInObject(recipes, suggestion);  
+              console.log(findAWord);
+              displayRecipes(findAWord);            
             option.addEventListener('click', function() {
-                alert('hello, world');
+                const filterButton = document.createElement('p');
+                filterButton.classList.add('filter-button');
+                filterButton.textContent = suggestion;
+                listFilters.appendChild(filterButton);
+                dataListItems = state.ingredients.filter(item => item != suggestion);
+                listeSuggestionsIngredients.innerHTML = " ";
+                dataListItems.forEach(item => {
+                    const option = document.createElement("li");
+                    option.textContent = item;
+                    listeSuggestionsIngredients.appendChild(option);
+                });
+                console.log(dataListItems);
             })
             
         });
@@ -93,7 +117,7 @@ function showAllApplianceSuggestions(){
             option.textContent = suggestion;
             listeSuggestionsAppliance.appendChild(option);
             option.addEventListener('click', function() {
-                alert('hello, world');
+                alert(suggestion);
             })
             
         });
@@ -107,7 +131,7 @@ function showAllUtensilsSuggestions(){
             option.textContent = suggestion;
             listeSuggestionsUtensils.appendChild(option);
             option.addEventListener('click', function() {
-                alert('hello, world');
+                alert(suggestion);
             })
             
         });
@@ -129,9 +153,9 @@ function showSuggestionsIngredients() {
                 option.textContent = suggestion;
                 option.classList.add("li-ingredients");
                 listeSuggestionsIngredients.appendChild(option);
-                
-                
-                
+                option.addEventListener('click', function() {
+                    
+                })
             });
         }
     }
@@ -152,6 +176,9 @@ function showSuggestionsIngredients() {
                     option.classList.add("li-appliance");
                     option.textContent = suggestion;
                     listeSuggestionsAppliance.appendChild(option);
+                    option.addEventListener('click', function() {
+                        alert(suggestion);
+                    })
                     
                 });
             }
@@ -172,6 +199,9 @@ function showSuggestionsIngredients() {
                 const option = document.createElement("li");
                 option.textContent = suggestion;
                 listeSuggestionsUtensils.appendChild(option);
+                option.addEventListener('click', function() {
+                    alert(suggestion);
+                })
               });
             }
           }
