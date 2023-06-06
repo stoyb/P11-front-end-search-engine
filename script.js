@@ -78,33 +78,44 @@ function showAllIngredientsSuggestions(){
             const option = document.createElement("li");
             option.textContent = suggestion;
             listeSuggestionsIngredients.appendChild(option);
-            function findWordInObject(obj, word) {
-                const result = [];
+            // function findWordInObject(obj, word) {
+            //     const result = [];
               
-                Object.values(obj).forEach(value => {
-                  if (typeof value === "string" && value.includes(word)) {
-                    result.push(value);
-                  }
-                });
-                return result;
-              }
-              const findAWord = findWordInObject(recipes, suggestion);  
-              console.log(findAWord);
-              displayRecipes(findAWord);            
-            option.addEventListener('click', function() {
+            //     Object.values(obj).forEach(value => {
+            //       if (typeof value === "string" && value.includes(word)) {
+            //         result.push(value);
+            //       }
+            //     });
+            //     return result;
+            //   }
+            //   const findAWord = findWordInObject(recipes, suggestion);  
+            //   console.log(findAWord);
+            //   displayRecipes(findAWord);  
+               let everClicked = false; 
+                      
+              option.addEventListener('click', function() {
+                if (!everClicked) {
+                everClicked = true; 
                 const filterButton = document.createElement('p');
                 filterButton.classList.add('filter-button');
                 filterButton.textContent = suggestion;
                 listFilters.appendChild(filterButton);
-                dataListItems = state.ingredients.filter(item => item != suggestion);
-                listeSuggestionsIngredients.innerHTML = " ";
-                dataListItems.forEach(item => {
-                    const option = document.createElement("li");
-                    option.textContent = item;
-                    listeSuggestionsIngredients.appendChild(option);
-                });
-                console.log(dataListItems);
-            })
+
+                }
+                // dataListItems = state.ingredients.filter(item => item != suggestion);
+              
+                // listeSuggestionsIngredients.innerHTML = "";
+              
+                // dataListItems.forEach(item => {
+                //   const option = document.createElement("li");
+                //   option.textContent = item;
+                //   listeSuggestionsIngredients.appendChild(option);
+                // });
+              
+                // console.log(dataListItems);
+                
+              });
+            
             
         });
     
