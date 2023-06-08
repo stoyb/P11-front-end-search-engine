@@ -29,15 +29,15 @@ input {
     right:30px;
 }
 
-#bloc-food__input, #bloc-food__list {
+#bloc-food__input, #bloc-food__list, .filter-button__ingredients {
     background-color: #3282F7;
 }
 
-#bloc-machine__input, #bloc-machine__list {
+#bloc-machine__input, #bloc-machine__list, .filter-button__appliance {
     background-color: #68D9A4;
 }
 
-#bloc-utensils__input, #bloc-utensils__list {
+#bloc-utensils__input, #bloc-utensils__list, .filter-button__utensils {
     background-color: #ED6454;
 }
 
@@ -137,8 +137,8 @@ li {
     margin-bottom: 0;
 }
 
-.filter-button {
-    background-color: #3282F7;
+.filter-button__ingredients, .filter-button__appliance, .filter-button__utensils {
     color: #FFF;
     display: inline-block;
 }
+
