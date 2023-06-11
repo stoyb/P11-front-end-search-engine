@@ -19,7 +19,7 @@ let state = {
     ingredients : dataIngredients,
     appliance : dataAppliance, 
     utensils : dataUtensils, 
-    keyword : ""
+    keyword : []
 }
 console.log(state.ingredients);
  
@@ -162,7 +162,7 @@ function showSuggestionsUtensils() {
         });
     }
     if (valeurRecherche.length >= 1) {
-        const suggestions = state.appliance.filter(item =>
+        const suggestions = state.utensils.filter(item =>
             item.toLowerCase().startsWith(valeurRecherche)
             );
         suggestions.forEach(suggestion => {
@@ -188,32 +188,73 @@ function displayRecipes(recipes) {
 }
 
 function addAKeyword(word) {
-    if(state.ingredients.includes(word) ||
-    state.appliance.includes(word) ||
-    state.utensils.includes(word)) {
-        let dataKeyword = state.keyword;
-        dataKeyword = dataKeyword + word;
-        console.log(dataKeyword);
+    let dataIngredients = state.ingredients;
+    let dataAppliance = state.appliance;
+    let dataUtensils = state.utensils; 
+    let dataKeyword = state.keyword;
+    if(word.length >= 3) {
+    dataIngredients.forEach((item)=> {
+        if(item.endsWith(word)|| item.includes(word + " ")|| item.endsWith(word + "s")) {
+            dataKeyword.push(item);
+            //dataKeyword = dataKeyword + item;
+        }
+    })
+    dataAppliance.forEach((item)=> {
+        if(item.endsWith(word)|| item.includes(word + " ")|| item.endsWith(word + "s")) {
+            dataKeyword.push(item);
+            //dataKeyword = dataKeyword + item;
+        }
+    })
+    dataUtensils.forEach((item)=> {
+        if(item.endsWith(word)|| item.includes(word + " ")|| item.endsWith(word + "s")) {
+           dataKeyword.push(item);
+            //dataKeyword = dataKeyword + item;
+        }
+    })
     }
+     return filterAllList(dataKeyword);
 }
 
 function getRecipes() {
     const valeurRecherche = searchRecipe.value.toLowerCase();
-    addAKeyword(valeurRecherche);
-    if(valeurRecherche.length <= 1) {
-        listOfRecipes.innerHTML = " ";
-        displayRecipes(recipes);
+    const keyWords = addAKeyword(valeurRecherche);
+    const filteredList = filterAllList(keyWords);
+    console.log(filteredList);
+  
+    if (valeurRecherche.length === 0) {
+      listOfRecipes.innerHTML = "";
+      displayRecipes(recipes);
+    } else if (valeurRecherche.length >= 3) {
+      const suggestionsName = recipes.filter(item =>
+        item.name.toLowerCase().includes(valeurRecherche) || item.name.toLowerCase().endsWith(valeurRecherche + " ")
+      );
+      const suggestionsDescription = recipes.filter(item =>
+        item.description.toLowerCase().includes(valeurRecherche) || item.description.toLowerCase().endsWith(valeurRecherche + " ")
+      );
+      const suggestionsIngredients = recipes.filter(recipe =>
+        recipe.ingredients.some(ingredient =>
+          ingredient.ingredient.toLowerCase().includes(valeurRecherche) || item.ingredient.toLowerCase().endsWith(valeurRecherche + " ")
+        )
+      );
+  
+      listOfRecipes.innerHTML = "";
+      displayRecipes(suggestionsName);
+      displayRecipes(suggestionsDescription);
+      displayRecipes(suggestionsIngredients);
     }
-    if(valeurRecherche.length >= 1) {
-        const suggestions = recipes.filter(item =>
-            item.name.toLowerCase().startsWith(valeurRecherche)
-            );
-        listOfRecipes.innerHTML = " ";
-        displayRecipes(suggestions);
-    } 
-}
+  }
+  
 
-
+// recipes.forEach((recipe) => {
+//     recipe.ingredients.forEach((ingredients) => {
+//     if (ingredients.ingredient.toLowerCase() === item.toLowerCase()) {
+//         const modelCard = recipeFactory(recipe);
+//         const cardRecipe = modelCard.getRecipeCardDOM();
+//         listOfRecipes.appendChild(cardRecipe);
+        
+//     }
+//     });
+// });
 
 
 
