@@ -115,6 +115,7 @@ function recipesWithIngredientsFilter(option, item, listeSuggestions, filterButt
             );
             displayRecipes(suggIngredients)
         }
+        
     });
 }
 
@@ -152,17 +153,13 @@ function recipesWithAppliancelFilter(option, item, listeSuggestions, filterButto
                 })
                 listeSuggestionsAppliance.appendChild(option);
             });
-            console.log(dataKeyword);
             const suggAppliance = recipes.filter((recipe) =>
-                dataKeyword.every((keyword) => { 
-                    recipe.description.toLowerCase().includes(" " + keyword.toLowerCase() + " ")
-                }
+                dataKeyword.every((keyword) =>
+                recipe.description.toLowerCase().includes(keyword.toLowerCase()) ||
+                recipe.appliance.toLowerCase().includes(keyword.toLowerCase())
                 )
             );
-
-
-            console.log(suggAppliance);
-            //displayRecipes(suggAppliance)
+        displayRecipes(suggAppliance)
         }
     });
 }
@@ -202,14 +199,23 @@ function recipesWithUtensilslFilter(option, item, listeSuggestions, filterButton
                 })
                 listeSuggestionsUtensils.appendChild(option);
             });
+            console.log(dataKeyword);
+
+            
+
             const suggUtensils = recipes.filter((recipe) =>
-                dataKeyword.every((keyword) =>
-                    recipe.ustensils.some((item) =>
-                        item.toLowerCase().includes(keyword.toLowerCase())
+              dataKeyword.some((keyword) =>
+                recipe.name.toLowerCase().includes(keyword.toLowerCase()) &&
+                recipe.description.toLowerCase().includes(keyword.toLowerCase()) &&
+                recipe.ingredients.some((ingredient) =>
+                        ingredient.ingredient.toLowerCase().includes(keyword.toLowerCase())
                     )
-                )
+              )
             );
-            console.log(suggUtensils);
+            
+            displayRecipes(suggUtensils)
+
+            //console.log(suggUtensils);
         }
     });
 }
