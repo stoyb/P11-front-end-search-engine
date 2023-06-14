@@ -88,6 +88,12 @@ input {
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 20px;
 }
+/* .hidden {
+    display: inline-block;
+    width: 100%;
+    
+} */
+
 
 .list-recipes__card {
     background-color: #E7E7E7;

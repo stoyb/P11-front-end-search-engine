@@ -7,6 +7,7 @@ const champRechercheAppliance = document.querySelector("#bloc-machine__input");
 const listeSuggestionsAppliance = document.querySelector("#bloc-machine__list");
 const champRechercheUtensils = document.querySelector("#bloc-utensils__input");
 const listeSuggestionsUtensils = document.querySelector("#bloc-utensils__list");
+const listForm = document.querySelector(".list-form");
 const listOfRecipes = document.querySelector(".list-recipes");
 const searchRecipe = document.querySelector("#search-recipe___input");
 const listFilters = document.querySelector('.list-filters');
@@ -354,6 +355,10 @@ function getRecipes() {
     if (valeurRecherche.length == 0) {
       listOfRecipes.innerHTML = "";
       displayRecipes(recipes);
+      if (listOfRecipes.style.display == "inline-block") {
+        listOfRecipes.style.display = "grid";
+        displayRecipes(filterAllList(allSuggestions));
+    }
     } else if (valeurRecherche.length >= 3) {
       const suggestionsName = recipes.filter(item =>
         item.name.toLowerCase().includes(" " + valeurRecherche + " ") || item.name.toLowerCase().endsWith(valeurRecherche + " ")
@@ -367,22 +372,34 @@ function getRecipes() {
         )
       );
 
+
       listOfRecipes.innerHTML = "";
       const allSuggestions = [
         ...suggestionsName,
         ...suggestionsDescription,
         ...suggestionsIngredients
       ];
+      
+      if (allSuggestions.length === 0) {
+        listOfRecipes.innerHTML = "Aucune recette ne contient " + ' "' + valeurRecherche + '" ' + ' vous pouvez chercher "tarte aux pommes", "poisson", etc.';
+        listOfRecipes.style.display = "inline-block";
+    }
+    displayRecipes(filterAllList(allSuggestions));
+      
+      
+      
+      
+      
+    
   
-      displayRecipes(filterAllList(allSuggestions));
       dataIngredients.splice(0, dataIngredients.length);
       dataIngredients = getUniqueItems(getAllIngredients, dataIngredients, allSuggestions);
       dataAppliance.splice(0, dataAppliance.length);
       dataAppliance = getUniqueItems(getAllAppliance, dataAppliance, allSuggestions);
       dataUtensils.splice(0, dataUtensils.length);
       dataUtensils = getUniqueItems(getAllUtensils, dataUtensils, allSuggestions);
-      console.log(dataIngredients);
-      champRechercheIngredients.addEventListener("input",showSuggestionsIngredients);
+      //console.log(dataIngredients);
+      //champRechercheIngredients.addEventListener("input",showSuggestionsIngredients);
       
     }
   }
