@@ -7,7 +7,6 @@ const champRechercheAppliance = document.querySelector("#bloc-machine__input");
 const listeSuggestionsAppliance = document.querySelector("#bloc-machine__list");
 const champRechercheUtensils = document.querySelector("#bloc-utensils__input");
 const listeSuggestionsUtensils = document.querySelector("#bloc-utensils__list");
-const listForm = document.querySelector(".list-form");
 const listOfRecipes = document.querySelector(".list-recipes");
 const searchRecipe = document.querySelector("#search-recipe___input");
 const listFilters = document.querySelector('.list-filters');
@@ -75,93 +74,154 @@ console.log(getUniqueItems(getAllUtensils, dataUtensils, recipes));
 
 function recipesWithIngredientsFilter(option, item, listeSuggestions, filterButtonClass) {
     option.addEventListener('click', function() {
+              
+        //////////////////////////////////////////////////////////
+        
         const filterButton = document.createElement('p');
         filterButton.classList.add(filterButtonClass);
         filterButton.textContent = item;
+        listFilters.appendChild(filterButton);
         let dataKeyword = state.keyword;
         dataKeyword.push(item);
-        const searchRecipeValue = searchRecipe.value.toLowerCase();
-        if (searchRecipeValue.length >= 3) {
-            const suggestions = state.ingredients.filter(item =>
-                item.toLowerCase().startsWith(searchRecipeValue) || item.toLowerCase().includes(" " + searchRecipeValue) || item.toLowerCase().endsWith(searchRecipeValue + " ") && !dataKeyword.includes(item) && !item.startsWith(dataKeyword)
-            );
-            dataKeyword.push(searchRecipeValue);
-            
-            listeSuggestionsIngredients.innerHTML = " ";
-            suggestions.forEach(suggestion => {
-                const option = document.createElement("li");
-                option.classList.add("li-ingredients");
-                option.textContent = suggestion;
-                listeSuggestionsIngredients.appendChild(option);
-            });
-            listFilters.appendChild(filterButton);
-            listeSuggestions.innerHTML = " ";
-            listOfRecipes.innerHTML = " ";
-            dataIngredients = dataIngredients.filter(ingredient => !dataKeyword.includes(ingredient));
-            dataIngredients.forEach((element) => {
-                const option = document.createElement("li"); 
-                option.classList.add("li-ingredients");
-                option.textContent = element;
-                option.addEventListener('click', function() {
-                    dataKeyword.push(element);
-                })
-                listeSuggestionsIngredients.appendChild(option);
-            });
-            const suggIngredients = recipes.filter((recipe) =>
+        console.log(dataKeyword);
+        listeSuggestionsIngredients.innerHTML = " ";
+        let suggestionsIngredients = state.ingredients.filter((element) =>
+            dataKeyword.every((keyword) =>
+                !element.toLowerCase().includes(keyword.toLowerCase()) 
+        ));
+        suggestionsIngredients.forEach(suggestion => {
+        const option = document.createElement("li");
+        option.classList.add("li-ingredients");
+        option.textContent = suggestion;
+        listeSuggestionsIngredients.appendChild(option);
+        });
+        const suggIngredients = recipes.filter((recipe) =>
                 dataKeyword.every((keyword) =>
                     recipe.ingredients.some((ingredient) =>
                         ingredient.ingredient.toLowerCase().includes(keyword.toLowerCase())
                     )
                 )
             );
-            displayRecipes(suggIngredients)
-        }
+        listOfRecipes.innerHTML = " ";
+        displayRecipes(suggIngredients);
+       
+        const searchRecipeValue = searchRecipe.value.toLowerCase();
+                if (searchRecipeValue.length >= 3) {
+                    suggestionsAppliance = state.appliance.filter(item =>
+                                item.toLowerCase().startsWith(searchRecipeValue) || item.toLowerCase().includes(" " + searchRecipeValue) || item.toLowerCase().endsWith(searchRecipeValue + " ") && !dataKeyword.includes(item) && !item.startsWith(dataKeyword)
+                            );
+        
+                dataKeyword.push(searchRecipeValue);
+            }
+            console.log(dataKeyword);
         
     });
 }
 
 function recipesWithAppliancelFilter(option, item, listeSuggestions, filterButtonClass) {
     option.addEventListener('click', function() {
+        
         const filterButton = document.createElement('p');
         filterButton.classList.add(filterButtonClass);
         filterButton.textContent = item;
+        listFilters.appendChild(filterButton);
         let dataKeyword = state.keyword;
         dataKeyword.push(item);
+        console.log(dataKeyword);
+        listeSuggestionsAppliance.innerHTML = " ";
+
+        let suggestionsAppliance = state.appliance.filter((element) =>
+        dataKeyword.every((keyword) =>
+        !element.toLowerCase().includes(keyword.toLowerCase()) 
+        )
+        );
+        console.log(suggestionsAppliance);
+        //dataKeyword.push(searchRecipeValue);
+        
+        suggestionsAppliance.forEach(suggestion => {
+            const option = document.createElement("li");
+            option.classList.add("li-ingredients");
+            option.textContent = suggestion;
+            listeSuggestionsAppliance.appendChild(option);
+        });
+        const suggAppliance = recipes.filter((recipe) =>
+        dataKeyword.every((keyword) =>
+        recipe.description.toLowerCase().includes(keyword.toLowerCase()) ||
+        recipe.appliance.toLowerCase().includes(keyword.toLowerCase())
+        )
+        );
+        listOfRecipes.innerHTML = " ";
+        displayRecipes(suggAppliance);
+
+
         const searchRecipeValue = searchRecipe.value.toLowerCase();
         if (searchRecipeValue.length >= 3) {
-            const suggestions = state.appliance.filter(item =>
-                item.toLowerCase().startsWith(searchRecipeValue) || item.toLowerCase().includes(" " + searchRecipeValue) || item.toLowerCase().endsWith(searchRecipeValue + " ") && !dataKeyword.includes(item) && !item.startsWith(dataKeyword)
-            );
-            dataKeyword.push(searchRecipeValue);
-            
-            listeSuggestionsAppliance.innerHTML = " ";
-            suggestions.forEach(suggestion => {
-                const option = document.createElement("li");
-                option.classList.add("li-ingredients");
-                option.textContent = suggestion;
-                listeSuggestionsAppliance.appendChild(option);
-            });
-            listFilters.appendChild(filterButton);
-            listeSuggestions.innerHTML = " ";
-            listOfRecipes.innerHTML = " ";
-            dataAppliance = dataAppliance.filter(ingredient => !dataKeyword.includes(ingredient));
-            dataAppliance.forEach((element) => {
-                const option = document.createElement("li"); 
-                option.classList.add("li-ingredients");
-                option.textContent = element;
-                option.addEventListener('click', function() {
-                    dataKeyword.push(element);
-                })
-                listeSuggestionsAppliance.appendChild(option);
-            });
-            const suggAppliance = recipes.filter((recipe) =>
-                dataKeyword.every((keyword) =>
-                recipe.description.toLowerCase().includes(keyword.toLowerCase()) ||
-                recipe.appliance.toLowerCase().includes(keyword.toLowerCase())
-                )
-            );
-        displayRecipes(suggAppliance)
-        }
+            suggestionsAppliance = state.appliance.filter(item =>
+                        item.toLowerCase().startsWith(searchRecipeValue) || item.toLowerCase().includes(" " + searchRecipeValue) || item.toLowerCase().endsWith(searchRecipeValue + " ") && !dataKeyword.includes(item) && !item.startsWith(dataKeyword)
+                    );
+
+        dataKeyword.push(searchRecipeValue);
+    }
+    console.log(dataKeyword);
+
+
+        // Créer une fonction qui se répète
+        // listFilters.appendChild(filterButton);
+        // listeSuggestions.innerHTML = " ";
+        // listOfRecipes.innerHTML = " ";
+        // dataAppliance = dataAppliance.filter(ingredient => !dataKeyword.includes(ingredient));
+        // dataAppliance.forEach((element) => {
+        //     const option = document.createElement("li"); 
+        //     option.classList.add("li-ingredients");
+        //     option.textContent = element;
+        //     option.addEventListener('click', function() {
+        //         dataKeyword.push(element);
+        //     })
+        //     listeSuggestionsAppliance.appendChild(option);
+        //     listOfRecipes.innerHTML = " ";
+        //     const suggAppliance = recipes.filter((recipe) =>
+        //         dataKeyword.every((keyword) =>
+        //         recipe.description.toLowerCase().includes(keyword.toLowerCase()) ||
+        //         recipe.appliance.toLowerCase().includes(keyword.toLowerCase())
+        //         )
+        //     );
+        //     displayRecipes(suggAppliance)
+        //     listeSuggestions.innerHTML = " ";
+        // });
+        
+        //     const suggestions = state.appliance.filter(item =>
+        //         item.toLowerCase().startsWith(searchRecipeValue) || item.toLowerCase().includes(" " + searchRecipeValue) || item.toLowerCase().endsWith(searchRecipeValue + " ") && !dataKeyword.includes(item) && !item.startsWith(dataKeyword)
+        //     );
+        //     dataKeyword.push(searchRecipeValue);
+
+        //     listeSuggestionsAppliance.innerHTML = " ";
+        //     suggestions.forEach(suggestion => {
+        //         const option = document.createElement("li");
+        //         option.classList.add("li-ingredients");
+        //         option.textContent = suggestion;
+        //         listeSuggestionsAppliance.appendChild(option);
+        //     });
+        //     listFilters.appendChild(filterButton);
+        //     listeSuggestions.innerHTML = " ";
+        //     listOfRecipes.innerHTML = " ";
+        //     dataAppliance = dataAppliance.filter(ingredient => !dataKeyword.includes(ingredient));
+        //     dataAppliance.forEach((element) => {
+        //         const option = document.createElement("li"); 
+        //         option.classList.add("li-ingredients");
+        //         option.textContent = element;
+        //         option.addEventListener('click', function() {
+        //             dataKeyword.push(element);
+        //         })
+        //         listeSuggestionsAppliance.appendChild(option);
+        //     });
+        //     const suggAppliance = recipes.filter((recipe) =>
+        //         dataKeyword.every((keyword) =>
+        //         recipe.description.toLowerCase().includes(keyword.toLowerCase()) ||
+        //         recipe.appliance.toLowerCase().includes(keyword.toLowerCase())
+        //         )
+        //     );
+        // displayRecipes(suggAppliance)
+       // }
     });
 }
 
@@ -357,7 +417,7 @@ function getRecipes() {
       displayRecipes(recipes);
       if (listOfRecipes.style.display == "inline-block") {
         listOfRecipes.style.display = "grid";
-        displayRecipes(filterAllList(allSuggestions));
+        displayRecipes(recipes);
     }
     } else if (valeurRecherche.length >= 3) {
       const suggestionsName = recipes.filter(item =>
@@ -398,7 +458,7 @@ function getRecipes() {
       dataAppliance = getUniqueItems(getAllAppliance, dataAppliance, allSuggestions);
       dataUtensils.splice(0, dataUtensils.length);
       dataUtensils = getUniqueItems(getAllUtensils, dataUtensils, allSuggestions);
-      //console.log(dataIngredients);
+      console.log(dataIngredients);
       //champRechercheIngredients.addEventListener("input",showSuggestionsIngredients);
       
     }
