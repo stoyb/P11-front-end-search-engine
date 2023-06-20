@@ -31,20 +31,7 @@ function filterAllList(list) {
 function getRecipes() {
     const valeurRecherche = searchRecipe.value.toLowerCase();
   
-    if (valeurRecherche.length == 0) {
-      listOfRecipes.innerHTML = "";
-      displayRecipes(recipes);
-      if (listOfRecipes.style.display == "inline-block") {
-        listOfRecipes.style.display = "grid";
-        displayRecipes(recipes);
-      }
-    } else if (valeurRecherche.length >= 3) {
-      state.ingredients.forEach((item) => {
-        if (item.toLowerCase().includes(valeurRecherche) && item.toLowerCase().endsWith(valeurRecherche)) {
-          state.keyword.push(valeurRecherche);
-        }
-      });
-    }
+    
     state.keyword = filterAllList(state.keyword);
     console.log(state.keyword);
   
@@ -80,6 +67,51 @@ function getRecipes() {
     dataUtensils = getUniqueItems(getAllUtensils, dataUtensils, allSuggestions);
     console.log(dataIngredients);
     const filterListrecipes = filterAllList(allSuggestions);
+
+    if (valeurRecherche.length == 0) {
+        listOfRecipes.innerHTML = "";
+        displayRecipes(recipes);
+        if (listOfRecipes.style.display == "inline-block") {
+          listOfRecipes.style.display = "grid";
+          displayRecipes(recipes);
+        }
+        console.log(state.keyword);
+        state.keyword = state.keyword.filter((item) => {
+          state.ingredients = getUniqueItems(getAllIngredients, dataIngredients, recipes);
+          state.appliance = getUniqueItems(getAllAppliance, dataAppliance, recipes);
+          state.utensils = getUniqueItems(getAllUtensils, dataUtensils, recipes);
+          return state.ingredients.includes(item) || state.appliance.includes(item) || state.utensils.includes(item);
+        });
+        state.keyword.forEach((item)=> {
+            const suggestionsName = recipes.filter(element =>
+                element.name.toLowerCase().includes(" " + item + " ") || element.name.toLowerCase().endsWith(item + " ")
+              );
+              const suggestionsDescription = recipes.filter(element =>
+                element.description.toLowerCase().startsWith(item) || element.description.toLowerCase().includes(" " + item + " ") || element.description.toLowerCase().endsWith(item + " ")
+              );
+              const suggestionsIngredients = recipes.filter(element =>
+                element.ingredients.some(ingredient =>
+                  ingredient.ingredient.toLowerCase().includes(item)
+                )
+              );
+              const allSuggestions = [
+                  ...suggestionsName,
+                  ...suggestionsDescription,
+                  ...suggestionsIngredients
+                ];
+                listOfRecipes.innerHTML = " ";
+                displayRecipes(filterAllList(allSuggestions));
+        })
+        console.log(state.keyword);
+        console.log(filterListrecipes);
+        
+      } else if (valeurRecherche.length >= 3) {
+        state.ingredients.forEach((item) => {
+          if (item.toLowerCase().includes(valeurRecherche) && item.toLowerCase().endsWith(valeurRecherche)) {
+            state.keyword.push(valeurRecherche);
+          }
+        });
+      }
     return filterListrecipes;
 }
 
