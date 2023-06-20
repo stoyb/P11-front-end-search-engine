@@ -1,9 +1,5 @@
-
 export function recipeFactory(data) {
-    
     const { name, id, time, description, ingredientName, ingredientQuantity } = data;
-    //const picture = `assets/photographers/${portrait}`;
-
     const ingredientsListData = data.ingredients.map(
         function(item) {
             const ingredientName = item.ingredient;
@@ -12,12 +8,10 @@ export function recipeFactory(data) {
             return { ingredientName, ingredientQuantity, ingredientUnit }
         }
     );
-    
-    
-        // Utilisez les valeurs extraites pour créer une instance d'ingrédient
         
     function getRecipeCardDOM() {
-        const card = document.createElement("div");
+        const card = document.createElement("a");
+        card.setAttribute("href", "#");
         card.classList.add('list-recipes__card');
         const title = document.createElement("p");
         title.textContent = name;

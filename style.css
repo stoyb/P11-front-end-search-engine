@@ -58,10 +58,6 @@ input {
     padding-top: 3rem;
 }
 
-
-
-
-
 #bloc-food__list, #bloc-machine__list, #bloc-utensils__list  {
    
     color: #FFF;
@@ -88,12 +84,6 @@ input {
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 20px;
 }
-/* .hidden {
-    display: inline-block;
-    width: 100%;
-    
-} */
-
 
 .list-recipes__card {
     background-color: #E7E7E7;
@@ -105,7 +95,8 @@ input {
     width: 380px;
     height:186px;
     padding: 16px;
-     
+    color: #000;
+    text-decoration: none;
 }
 .list-recipes__title {
     order:1;
@@ -118,8 +109,6 @@ input {
     column-gap: 8px;
     font-size: 13px;
 }
-
-
 li {
     list-style-type: none;
 }
