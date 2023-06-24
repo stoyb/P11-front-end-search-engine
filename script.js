@@ -179,6 +179,42 @@ function recipesWithIngredientsFilter(option, item, filterButtonClass) {
         filterButton.appendChild(closeButton);
         listFilters.appendChild(filterButton);
         state.keyword.push(item);
+        const exportedRecipes = getRecipes();
+        const suggIngredients = exportedRecipes.filter((recipe) =>
+            state.keyword.every((keyword) =>
+                recipe.ingredients.some((ingredient) =>
+                    ingredient.ingredient.toLowerCase().includes(keyword.toLowerCase())
+                ) ||
+                recipe.description.toLowerCase().includes(keyword.toLowerCase()) ||
+                recipe.appliance.toLowerCase().includes(keyword.toLowerCase()) ||
+                recipe.ustensils.some((item) =>
+                    item.toLowerCase().includes(keyword.toLowerCase())
+                )
+            )
+        );
+        console.log(state.keyword);
+        listeSuggestionsIngredients.innerHTML = " ";
+        listeSuggestionsAppliance.innerHTML = " ";
+        listeSuggestionsUtensils.innerHTML = " ";
+        state.ingredients = state.ingredients.filter((element) =>
+            state.keyword.every((keyword) =>
+                !element.toLowerCase().includes(keyword.toLowerCase()) 
+        ));
+        
+        console.log(suggIngredients);
+        listeSuggestionsIngredients.innerHTML = " ";
+        state.ingredients = filterAllList(getAllIngredients(suggIngredients));
+        state.ingredients = state.ingredients.filter((element) =>
+            state.keyword.every((keyword) =>
+                !element.toLowerCase().includes(keyword.toLowerCase()) 
+        ));
+        console.log(state.ingredients);
+        state.appliance = filterAllList(getAllAppliance(suggIngredients));
+        state.utensils = filterAllList(getAllUtensils(suggIngredients));
+        listOfRecipes.innerHTML = " ";
+        displayRecipes(suggIngredients);
+
+
         closeButton.addEventListener('click', function() {
             filterButton.remove();
             state.keyword = state.keyword.filter((keyword)=> {
@@ -214,33 +250,7 @@ function recipesWithIngredientsFilter(option, item, filterButtonClass) {
             }
              
         })
-        console.log(state.keyword);
-        listeSuggestionsIngredients.innerHTML = " ";
-        listeSuggestionsAppliance.innerHTML = " ";
-        listeSuggestionsUtensils.innerHTML = " ";
-        state.ingredients = state.ingredients.filter((element) =>
-            state.keyword.every((keyword) =>
-                !element.toLowerCase().includes(keyword.toLowerCase()) 
-        ));
-        const exportedRecipes = getRecipes();
-        const suggIngredients = exportedRecipes.filter((recipe) =>
-            state.keyword.every((keyword) =>
-                recipe.ingredients.some((ingredient) =>
-                    ingredient.ingredient.toLowerCase().includes(keyword.toLowerCase())
-                )
-            )
-        );
-        listeSuggestionsIngredients.innerHTML = " ";
-        state.ingredients = filterAllList(getAllIngredients(suggIngredients));
-        state.ingredients = state.ingredients.filter((element) =>
-            state.keyword.every((keyword) =>
-                !element.toLowerCase().includes(keyword.toLowerCase()) 
-        ));
-        console.log(state.ingredients);
-        state.appliance = filterAllList(getAllAppliance(suggIngredients));
-        state.utensils = filterAllList(getAllUtensils(suggIngredients));
-        listOfRecipes.innerHTML = " ";
-        displayRecipes(suggIngredients);
+        
     });
 }
 
@@ -341,14 +351,21 @@ function recipesWithUtensilslFilter(option, item, filterButtonClass) {
         filterButton.appendChild(closeButton);
         listFilters.appendChild(filterButton);
         state.keyword.push(item);
+        console.log(state.keyword);
         const exportedRecipes = getRecipes();
         const suggUtensils = exportedRecipes.filter((recipe) =>
             state.keyword.every((keyword) =>
-                recipe.ustensils.some((item) =>
-                    item.toLowerCase().includes(keyword.toLowerCase())
-                )
+            recipe.ingredients.some((ingredient) =>
+            ingredient.ingredient.toLowerCase().includes(keyword.toLowerCase())
+        ) ||
+        recipe.description.toLowerCase().includes(keyword.toLowerCase()) ||
+        recipe.appliance.toLowerCase().includes(keyword.toLowerCase()) ||
+        recipe.ustensils.some((item) =>
+            item.toLowerCase().includes(keyword.toLowerCase())
+        )
             )
         );
+        console.log(suggUtensils);
         closeButton.addEventListener('click', function() {
             filterButton.remove();
             state.keyword = state.keyword.filter((keyword)=> {
