@@ -29,11 +29,11 @@ input {
     right:30px;
 }
 
-#bloc-food__input, #bloc-food__list, .filter-button__ingredients {
+#bloc-ingredients__input, #bloc-ingredients__list, .filter-button__ingredients {
     background-color: #3282F7;
 }
 
-#bloc-machine__input, #bloc-machine__list, .filter-button__appliance {
+#bloc-appliance__input, #bloc-appliance__list, .filter-button__appliance {
     background-color: #68D9A4;
 }
 
@@ -41,13 +41,13 @@ input {
     background-color: #ED6454;
 }
 
-#bloc-food__input::placeholder, #bloc-machine__input::placeholder, #bloc-utensils__input::placeholder {
+#bloc-ingredients__input::placeholder, #bloc-appliance__input::placeholder, #bloc-utensils__input::placeholder {
     color: #FFF;
     font-family: Lato;
     font-size: 18px;
 }
 
-.bloc-food__icon, .bloc-machine__icon, .bloc-utensils__icon {
+.bloc-ingredients__icon, .bloc-appliance__icon, .bloc-utensils__icon {
     color: #FFF;
     font-size: 18px;
 }
@@ -58,7 +58,7 @@ input {
     padding-top: 3rem;
 }
 
-#bloc-food__list, #bloc-machine__list, #bloc-utensils__list  {
+#bloc-ingredients__list, #bloc-appliance__list, #bloc-utensils__list  {
    
     color: #FFF;
     padding-left: 0;
@@ -67,11 +67,11 @@ input {
     bottom: 4px;
 }
 
-#bloc-food__list > li:hover {
+#bloc-ingredients__list > li:hover {
     background-color: #76AAF9;
 }
 
-#bloc-machine__list > li:hover {
+#bloc-appliance__list > li:hover {
     background-color: #9DE7C4;
 }
 
