@@ -23,7 +23,7 @@ function filterAList(list) {
     const uniqueItems = [...new Set(list)];
     return uniqueItems
 }
-// Displays all recipes on the website
+// Displays all recipes on the website -- boucle for
 function displayRecipes(recipes) {
     recipes.forEach((recipe)=> {
         const modelCard = recipeFactory(recipe);
@@ -49,7 +49,6 @@ function selectRecipes(item) {
         ...suggestionsDescription,
         ...suggestionsIngredients
     ];
-    console.log(recipesList);
     return recipesList
 } 
 // Changes all the three filters' states 
@@ -92,7 +91,6 @@ function getRecipesWithSearchBar() {
             listOfRecipes.innerHTML = " ";
             displayRecipes(filterAList(recipesList));
         })
-
       } else if (searchValue.length >= 3) {
         state.ingredients.forEach((item) => {
             if (item.toLowerCase().includes(searchValue) && item.toLowerCase().endsWith(searchValue)) {
@@ -118,7 +116,6 @@ function getAllAppliance(recipes) {
     recipes.forEach(recipe => {
         applianceAll.push(recipe.appliance.toLowerCase());
     });
-
     return applianceAll;
 }
 // Gets all utensils inside each recipe (with occurrences)
@@ -157,7 +154,7 @@ function filterRecipesWithKeyWords() {
     );
     return filteredListOfRecipes
 }
-// Pull out all words inside state.keyword
+//Pull out all words inside state.keyword
 function filterStateProperty(property, keyword) {
     return property.filter((element) => {
         return keyword.every((item) => {
@@ -166,17 +163,20 @@ function filterStateProperty(property, keyword) {
     });
 }
 // Generates new datalists filters
-function updateStates(filtersList, filterProperty) {
+function updateStates(filtersList) {
     ingredientsSuggestionsList.innerHTML = " ";
     applianceSuggestionsList.innerHTML = " ";
     utensilsSuggestionsList.innerHTML = " ";  
     state.ingredients = filterAList(getAllIngredients(filtersList));
     state.appliance = filterAList(getAllAppliance(filtersList));
     state.utensils = filterAList(getAllUtensils(filtersList));
-    state[filterProperty] = filterStateProperty(state[filterProperty], state.keyword);
+    state.ingredients = filterStateProperty(state.ingredients, state.keyword);
+    state.appliance = filterStateProperty(state.appliance, state.keyword);
+    state.utensils = filterStateProperty(state.utensils, state.keyword);
+
 }
 // Creates a tag and changes the three datalists' content and recipes list's content
-function createATag(filterButtonClass, item, filterProperty) {
+function createATag(filterButtonClass, item) {
         const tagASuggestion = document.createElement('p');
         tagASuggestion.classList.add(filterButtonClass);
         tagASuggestion.textContent = item;
@@ -194,12 +194,12 @@ function createATag(filterButtonClass, item, filterProperty) {
             });
             if (state.keyword.length >= 1 || listOfTags.innerHTML === "") {
                 let recipeList = filterRecipesWithKeyWords();
-                updateStates(recipeList, filterProperty);
+                updateStates(recipeList);
                 listOfRecipes.innerHTML = "";
                 displayRecipes(filterAList(recipeList));
             }
             if (state.keyword.length === 0) {
-                updateStates(recipes, filterProperty);
+                updateStates(recipes);
                 listOfRecipes.innerHTML = "";
                 displayRecipes(recipes);
             }
@@ -210,13 +210,13 @@ function createATag(filterButtonClass, item, filterProperty) {
         displayRecipes(recipeList);
 }
 // Executes createATag function with the click on a suggestion
-function clickOnASuggestion(option, item, filterButtonClass, filterProperty) {
+function clickOnASuggestion(option, item, filterButtonClass) {
         option.addEventListener('click', function() {
-            createATag(filterButtonClass, item, filterProperty)
+            createATag(filterButtonClass, item)
         });
 }
 // Displays a datalist for each filter
-function displayDatalist(filterButtonClass, stateFilters, searchBar, suggestionsList, filterProperty) {
+function displayDatalist(filterButtonClass, stateFilters, searchBar, suggestionsList) {
     const searchValue = searchBar.value.toLowerCase();
     suggestionsList.innerHTML = "";
     function createOptionAndAddClickEvent(item) {
@@ -224,7 +224,7 @@ function displayDatalist(filterButtonClass, stateFilters, searchBar, suggestions
       option.classList.add("li-filters");
       option.textContent = item;
       suggestionsList.appendChild(option);
-      clickOnASuggestion(option, item, filterButtonClass, filterProperty);
+      clickOnASuggestion(option, item, filterButtonClass);
     }
     if (searchValue.length === 0) {
       stateFilters.forEach(createOptionAndAddClickEvent);
@@ -238,13 +238,13 @@ function displayDatalist(filterButtonClass, stateFilters, searchBar, suggestions
                                 /* Calls of functionn */
 changeAllStates(recipes)
 ingredientsSearchBar.addEventListener("input",function (){
-    displayDatalist('filter-button__ingredients', state.ingredients, ingredientsSearchBar, ingredientsSuggestionsList, 'ingredients')
+    displayDatalist('filter-button__ingredients', state.ingredients, ingredientsSearchBar, ingredientsSuggestionsList)
 });
 applianceSearchBar.addEventListener("input",function (){
-    displayDatalist('filter-button__appliance', state.appliance, applianceSearchBar, applianceSuggestionsList, 'appliance')
+    displayDatalist('filter-button__appliance', state.appliance, applianceSearchBar, applianceSuggestionsList)
 });
 utensilsSearchBar.addEventListener("input",function (){
-    displayDatalist('filter-button__utensils', state.utensils, utensilsSearchBar, utensilsSuggestionsList, 'utensils')
+    displayDatalist('filter-button__utensils', state.utensils, utensilsSearchBar, utensilsSuggestionsList)
 });
 searchRecipe.addEventListener("input", getRecipesWithSearchBar);
 displayRecipes(recipes);
