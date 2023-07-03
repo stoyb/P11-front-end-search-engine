@@ -29,25 +29,25 @@ input {
     right:30px;
 }
 
-#bloc-food__input, #bloc-food__list {
+#bloc-ingredients__input, #bloc-ingredients__list, .filter-button__ingredients {
     background-color: #3282F7;
 }
 
-#bloc-machine__input, #bloc-machine__list {
+#bloc-appliance__input, #bloc-appliance__list, .filter-button__appliance {
     background-color: #68D9A4;
 }
 
-#bloc-utensils__input, #bloc-utensils__list {
+#bloc-utensils__input, #bloc-utensils__list, .filter-button__utensils {
     background-color: #ED6454;
 }
 
-#bloc-food__input::placeholder, #bloc-machine__input::placeholder, #bloc-utensils__input::placeholder {
+#bloc-ingredients__input::placeholder, #bloc-appliance__input::placeholder, #bloc-utensils__input::placeholder {
     color: #FFF;
     font-family: Lato;
     font-size: 18px;
 }
 
-.bloc-food__icon, .bloc-machine__icon, .bloc-utensils__icon {
+.bloc-ingredients__icon, .bloc-appliance__icon, .bloc-utensils__icon {
     color: #FFF;
     font-size: 18px;
 }
@@ -58,11 +58,7 @@ input {
     padding-top: 3rem;
 }
 
-
-
-
-
-#bloc-food__list, #bloc-machine__list, #bloc-utensils__list  {
+#bloc-ingredients__list, #bloc-appliance__list, #bloc-utensils__list  {
    
     color: #FFF;
     padding-left: 0;
@@ -71,11 +67,11 @@ input {
     bottom: 4px;
 }
 
-#bloc-food__list > li:hover {
+#bloc-ingredients__list > li:hover {
     background-color: #76AAF9;
 }
 
-#bloc-machine__list > li:hover {
+#bloc-appliance__list > li:hover {
     background-color: #9DE7C4;
 }
 
@@ -99,7 +95,8 @@ input {
     width: 380px;
     height:186px;
     padding: 16px;
-     
+    color: #000;
+    text-decoration: none;
 }
 .list-recipes__title {
     order:1;
@@ -112,8 +109,6 @@ input {
     column-gap: 8px;
     font-size: 13px;
 }
-
-
 li {
     list-style-type: none;
 }
@@ -135,4 +130,9 @@ li {
 
 .ingredient-content > p {
     margin-bottom: 0;
+}
+
+.filter-button__ingredients, .filter-button__appliance, .filter-button__utensils {
+    color: #FFF;
+    display: inline-block;
 }
