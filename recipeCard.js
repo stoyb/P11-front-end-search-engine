@@ -1,4 +1,5 @@
-export function recipeFactory(data) {
+//Creates card for a recipe
+export function recipeCard(data) {
     const { name, id, time, description, ingredientName, ingredientQuantity } = data;
     const ingredientsListData = data.ingredients.map(
         function(item) {
@@ -7,8 +8,7 @@ export function recipeFactory(data) {
             const ingredientUnit = item.unit;
             return { ingredientName, ingredientQuantity, ingredientUnit }
         }
-    );
-        
+    ); 
     function getRecipeCardDOM() {
         const card = document.createElement("a");
         card.setAttribute("href", "#");
