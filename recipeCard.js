@@ -1,4 +1,4 @@
-
+//Creates card for a recipe
 export function recipeFactory(data) {
     const { name, id, time, description, ingredientName, ingredientQuantity } = data;
     const ingredientsListData = [];
