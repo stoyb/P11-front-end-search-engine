@@ -1,4 +1,4 @@
-                            /* Variables et constants */
+                            /* Variables a constants */
 import { recipes } from "/recipes.js";
 import { recipeFactory } from "/recipeCard.js";
 const ingredientsSearchBar = document.querySelector("#bloc-ingredients__input");
