@@ -1,28 +1,50 @@
 body {
-    padding: 0 100px;
+    padding: 0;
     margin: 0;
 }
-.logo__title {
-    color: #D04F4F;
-    font-size: 36px;
-    font-family: DM Sans;
-    font-weight: 700;
+
+header {
+    background: url(hero.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 
-input {
-    background-color: #E7E7E7;
-    font-family: Lato;
-    font-size: 18px;
-    font-weight: 400;
+.hero__logo {
+    width: 200px;
+    height: 25px;
+    margin: 40px;
 }
 
-.search-icon {
+header h1 {
+    max-width: 680px;
+    color: #FFD15D;
+    font-family: Anton;
+    margin-top:100px;
+    letter-spacing: 1px;
+}
+
+.search-recipe {
+    margin-bottom: 160px;
+}
+#search-recipe___input {
+    font-family: Manrope;
+    height:60px;
+    width:66%;
+}
+
+#search-recipe__icon {
     float: right;
-    position: relative;
-    bottom: 46px;
-    right: 10px;
-    font-size: 26px;
+    bottom:57.25px;
+    right:17.25%;
+    padding: 10px 14px;
 }
+
+@media(max-width:767px) {
+    #search-recipe__icon {
+        bottom: 56.25px;
+    }
+}
+
 
 .chevron-down {
     position: relative;

@@ -1,6 +1,6 @@
                             /* Variables and constants */
 import { recipes } from "/recipes.js";
-import { recipeFactory } from "/recipeCard.js";
+import { recipeCard } from "/recipeCard.js";
 const ingredientsSearchBar = document.querySelector("#bloc-ingredients__input");
 const ingredientsSuggestionsList = document.querySelector("#bloc-ingredients__list");
 const applianceSearchBar = document.querySelector("#bloc-appliance__input");
@@ -26,7 +26,7 @@ function filterAList(list) {
 // Displays all recipes on the website -- boucle for
 function displayRecipes(recipes) {
     recipes.forEach((recipe)=> {
-        const modelCard = recipeFactory(recipe);
+        const modelCard = recipeCard(recipe);
         const cardRecipe = modelCard.getRecipeCardDOM();
         listOfRecipes.appendChild(cardRecipe);
     })
