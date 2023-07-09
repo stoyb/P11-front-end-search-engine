@@ -195,9 +195,6 @@ li {
     #list-tags {
         padding-top: 120px;
     }
-    .list-recipes__time{
-        left:68%;
-    }
     #container__form {
         width: 77%;
     }
@@ -215,6 +212,9 @@ li {
     }
     #container__form {
         width: 84%;
+    }
+    .list-recipes__time{
+        left:68%;
     }
     .list-recipes{
         grid-template-columns: 1fr 1fr 1fr;

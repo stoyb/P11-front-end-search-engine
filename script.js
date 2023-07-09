@@ -11,7 +11,7 @@ const listOfRecipes = document.querySelector(".list-recipes");
 const searchRecipe = document.querySelector("#search-recipe___input");
 const listOfTags = document.querySelector('#list-tags');
 const nbRecipesAll = document.querySelector('#nb-recipes-all');
-const nbRecipes = document.querySelector('#nb-recipes');
+const nbRecipes = document.querySelector('#nb-recipes__paragraph');
 const lastRecipeId  = recipes[recipes.length - 1].id;
 const downChevronIngredients = document.querySelector('#input-ingredients__chevron-down');
 const downChevronAppliance = document.querySelector('#input-appliance__chevron-down');
@@ -48,7 +48,16 @@ function closeListOfTags(upChevron, downChevron, blocFilters) {
         blocFilters.style.display = "none";
     })
 }
-// Function to remove the occurrences 
+// Displays number of recipes 
+function displayNbOfRecipes(recipes) {
+    nbRecipes.innerHTML = " ";
+    nbRecipes.innerHTML = recipes.length + " recettes";
+    if(recipes.length === 1 ) {
+        nbRecipes.innerHTML = " ";
+        nbRecipes.innerHTML = 1 + " recette";
+    }
+}
+// Removes the occurrences 
 function filterAList(list) {
     const uniqueItems = [...new Set(list)];
     return uniqueItems
@@ -92,15 +101,19 @@ function getRecipesWithSearchBar() {
     const searchValue = searchRecipe.value.toLowerCase();
     state.keyword = filterAList(state.keyword);
     const listRecipe = selectRecipes(searchValue);
+    console.log(listRecipe);
     if (listRecipe.length === 0) {
       listOfRecipes.innerHTML = "Aucune recette ne contient " + ' "' + searchValue + '" ' + ' vous pouvez chercher "tarte aux pommes", "poisson", etc.';
       listOfRecipes.style.display = "inline-block";
+      nbRecipes.innerHTML = " ";
+      nbRecipes.innerHTML = 0 + " recettes";
     }
     if (listRecipe.length >= 1) {
         listOfRecipes.innerHTML = " ";
+        listOfRecipes.style.display = "grid";
         displayRecipes(filterAList(listRecipe));
-        nbRecipes.innerHTML = " ";
-        nbRecipes.innerHTML = filterAList(listRecipe).length;
+        displayNbOfRecipes(filterAList(listRecipe));
+        console.log(state.keyword);
     }
     state.ingredients.splice(0, state.ingredients.length);
     state.appliance.splice(0, state.appliance.length);
@@ -110,13 +123,13 @@ function getRecipesWithSearchBar() {
     if (searchValue.length == 0) {
         listOfRecipes.innerHTML = "";
         displayRecipes(recipes);
-        nbRecipes.innerHTML = " ";
-        nbRecipes.innerHTML = recipes.length;
+        displayNbOfRecipes(recipes);
+        console.log(state.keyword);
         if (listOfRecipes.style.display == "inline-block") {
             listOfRecipes.style.display = "grid";
             displayRecipes(recipes);
-            nbRecipes.innerHTML = " ";
-            nbRecipes.innerHTML = recipes.length;
+            displayNbOfRecipes(recipes);
+            console.log(state.keyword);
         }
         state.keyword = state.keyword.filter((item) => {
             changeAllStates(recipes)
@@ -126,12 +139,22 @@ function getRecipesWithSearchBar() {
             const recipesList = selectRecipes(item);
             listOfRecipes.innerHTML = " ";
             displayRecipes(filterAList(recipesList));
-            nbRecipes.innerHTML = " ";
-            nbRecipes.innerHTML = filterAList(recipesList).length;
+            displayNbOfRecipes(filterAList(recipesList));
+            console.log(state.keyword);
         })
       } else if (searchValue.length >= 3) {
+        listRecipe.forEach((item) => {
+            if (item.name.toLowerCase().includes(" "  + searchValue + " ") || item.name.toLowerCase().startsWith(searchValue + " ") || item.name.toLowerCase().endsWith(searchValue)) {
+                state.keyword.push(searchValue);
+            }
+        });
+        listRecipe.forEach((item) => {
+            if (item.description.toLowerCase().includes(" "  + searchValue + " ") || item.description.toLowerCase().startsWith(searchValue + " ") || item.description.toLowerCase().endsWith(searchValue)) {
+                state.keyword.push(searchValue);
+            }
+        });
         state.ingredients.forEach((item) => {
-            if (item.toLowerCase().includes(searchValue) && item.toLowerCase().endsWith(searchValue)) {
+            if (item.toLowerCase().includes(" "  + searchValue + " ") || item.toLowerCase().startsWith(searchValue + " ") || item.toLowerCase().endsWith(searchValue)) {
                 state.keyword.push(searchValue);
             }
         });
@@ -235,30 +258,29 @@ function createATag(item) {
                 updateStates(recipeList);
                 listOfRecipes.innerHTML = "";
                 displayRecipes(filterAList(recipeList));
-                nbRecipes.innerHTML = " ";
-                nbRecipes.innerHTML = filterAList(recipeList).length;
-                
+                displayNbOfRecipes(filterAList(recipeList));
+                console.log(state.keyword);
             }
             if (state.keyword.length === 0) {
                 updateStates(recipes);
                 listOfRecipes.innerHTML = "";
                 displayRecipes(recipes);
-                nbRecipes.innerHTML = " ";
-                nbRecipes.innerHTML = recipes.length;
+                displayNbOfRecipes(recipes);
+                console.log(state.keyword);
             }
         });
         const recipeList = filterRecipesWithKeyWords();
         updateStates(recipeList);
         listOfRecipes.innerHTML = "";
         displayRecipes(recipeList);
-        nbRecipes.innerHTML = " ";
-        nbRecipes.innerHTML = recipeList.length;
+        displayNbOfRecipes(filterAList(recipeList));
+        console.log(state.keyword);
 }
 // Executes createATag function with the click on a suggestion
 function clickOnASuggestion(option, item) {
-        option.addEventListener('click', function() {
-            createATag(item)
-        });
+    option.addEventListener('click', function() {
+        createATag(item)
+    });
 }
 // Displays a datalist for each filter
 function displayDatalist(stateFilters, searchBar, suggestionsList) {
@@ -299,5 +321,5 @@ utensilsSearchBar.addEventListener("input",function (){
 });
 searchRecipe.addEventListener("input", getRecipesWithSearchBar);
 displayRecipes(recipes);
-nbRecipes.innerHTML = " ";
-nbRecipes.innerHTML = recipes.length;
+displayNbOfRecipes(recipes);
+console.log(state.keyword);
