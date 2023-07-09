@@ -101,7 +101,6 @@ function getRecipesWithSearchBar() {
     const searchValue = searchRecipe.value.toLowerCase();
     state.keyword = filterAList(state.keyword);
     const listRecipe = selectRecipes(searchValue);
-    console.log(listRecipe);
     if (listRecipe.length === 0) {
       listOfRecipes.innerHTML = "Aucune recette ne contient " + ' "' + searchValue + '" ' + ' vous pouvez chercher "tarte aux pommes", "poisson", etc.';
       listOfRecipes.style.display = "inline-block";
@@ -113,7 +112,6 @@ function getRecipesWithSearchBar() {
         listOfRecipes.style.display = "grid";
         displayRecipes(filterAList(listRecipe));
         displayNbOfRecipes(filterAList(listRecipe));
-        console.log(state.keyword);
     }
     state.ingredients.splice(0, state.ingredients.length);
     state.appliance.splice(0, state.appliance.length);
@@ -124,12 +122,10 @@ function getRecipesWithSearchBar() {
         listOfRecipes.innerHTML = "";
         displayRecipes(recipes);
         displayNbOfRecipes(recipes);
-        console.log(state.keyword);
         if (listOfRecipes.style.display == "inline-block") {
             listOfRecipes.style.display = "grid";
             displayRecipes(recipes);
             displayNbOfRecipes(recipes);
-            console.log(state.keyword);
         }
         state.keyword = state.keyword.filter((item) => {
             changeAllStates(recipes)
@@ -140,7 +136,6 @@ function getRecipesWithSearchBar() {
             listOfRecipes.innerHTML = " ";
             displayRecipes(filterAList(recipesList));
             displayNbOfRecipes(filterAList(recipesList));
-            console.log(state.keyword);
         })
       } else if (searchValue.length >= 3) {
         listRecipe.forEach((item) => {
@@ -259,14 +254,12 @@ function createATag(item) {
                 listOfRecipes.innerHTML = "";
                 displayRecipes(filterAList(recipeList));
                 displayNbOfRecipes(filterAList(recipeList));
-                console.log(state.keyword);
             }
             if (state.keyword.length === 0) {
                 updateStates(recipes);
                 listOfRecipes.innerHTML = "";
                 displayRecipes(recipes);
                 displayNbOfRecipes(recipes);
-                console.log(state.keyword);
             }
         });
         const recipeList = filterRecipesWithKeyWords();
@@ -274,7 +267,6 @@ function createATag(item) {
         listOfRecipes.innerHTML = "";
         displayRecipes(recipeList);
         displayNbOfRecipes(filterAList(recipeList));
-        console.log(state.keyword);
 }
 // Executes createATag function with the click on a suggestion
 function clickOnASuggestion(option, item) {
@@ -322,4 +314,3 @@ utensilsSearchBar.addEventListener("input",function (){
 searchRecipe.addEventListener("input", getRecipesWithSearchBar);
 displayRecipes(recipes);
 displayNbOfRecipes(recipes);
-console.log(state.keyword);
