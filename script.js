@@ -22,7 +22,7 @@ const blocUtensils = document.querySelector("#bloc-utensils");
 const upChevronIngredients = document.querySelector('#input-ingredients__chevron-up');
 const upChevronAppliance = document.querySelector('#input-appliance__chevron-up');
 const upChevronUtensils = document.querySelector('#input-utensils__chevron-up');
-//Number of recipes
+//Number of recipes in ListOfRecipes
 nbRecipesAll.innerHTML = lastRecipeId;
 // Create the filtered lists of filters 
 let state = {
