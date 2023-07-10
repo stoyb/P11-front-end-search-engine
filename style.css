@@ -44,6 +44,10 @@ header h1 {
 #input-ingredients__chevron-up, #input-appliance__chevron-up, #input-utensils__chevron-up {
     display: none;
 }
+
+.filter-button span {
+    cursor: pointer;
+}
 main {
     padding: 0 90px;
 }
@@ -205,6 +209,9 @@ li {
     .list-recipes{
         grid-template-columns: 1fr 1fr;
     }
+    .list-recipes__time{
+        left:68%;
+    }
 }
 @media(min-width:992px) {
     #list-tags {
@@ -214,7 +221,7 @@ li {
         width: 84%;
     }
     .list-recipes__time{
-        left:68%;
+        left:72%;
     }
     .list-recipes{
         grid-template-columns: 1fr 1fr 1fr;

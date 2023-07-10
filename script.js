@@ -139,13 +139,12 @@ function getRecipesWithSearchBar() {
         })
       } else if (searchValue.length >= 3) {
         listRecipe.forEach((item) => {
-            if (item.name.toLowerCase().includes(" "  + searchValue + " ") || item.name.toLowerCase().startsWith(searchValue + " ") || item.name.toLowerCase().endsWith(searchValue)) {
-                state.keyword.push(searchValue);
-            }
-        });
-        listRecipe.forEach((item) => {
-            if (item.description.toLowerCase().includes(" "  + searchValue + " ") || item.description.toLowerCase().startsWith(searchValue + " ") || item.description.toLowerCase().endsWith(searchValue)) {
-                state.keyword.push(searchValue);
+            const itemName = item.name.toLowerCase();
+            const itemDescription = item.description.toLowerCase();
+            if (itemName.includes(" " + searchValue + " ") || itemName.startsWith(searchValue + " ") || itemName.endsWith(searchValue) ||
+              itemDescription.includes(" " + searchValue + " ") || itemDescription.startsWith(searchValue + " ") || itemDescription.endsWith(searchValue)
+            ) {
+              state.keyword.push(searchValue);
             }
         });
         state.ingredients.forEach((item) => {
@@ -233,40 +232,40 @@ function updateStates(filtersList) {
 }
 // Creates a tag and changes the three datalists' content and recipes list's content
 function createATag(item) {
-        const tagASuggestion = document.createElement('p');
-        tagASuggestion.classList.add('filter-button');
-        tagASuggestion.textContent = item;
-        const closeTagButton = document.createElement("span");
-        const closeTagButtonIcon = document.createElement('i');
-        closeTagButtonIcon.classList.add("fa", "fa-xmark");
-        closeTagButton.appendChild(closeTagButtonIcon);
-        tagASuggestion.appendChild(closeTagButton);
-        listOfTags.appendChild(tagASuggestion);
-        state.keyword.push(item);
-        closeTagButton.addEventListener('click', function() {
-            tagASuggestion.remove();
-            state.keyword = state.keyword.filter((keyword) => {
-                return !keyword.toLowerCase().includes(item.toLowerCase());
-            });
-            if (state.keyword.length >= 1 || listOfTags.innerHTML === "") {
-                let recipeList = filterRecipesWithKeyWords();
-                updateStates(recipeList);
-                listOfRecipes.innerHTML = "";
-                displayRecipes(filterAList(recipeList));
-                displayNbOfRecipes(filterAList(recipeList));
-            }
-            if (state.keyword.length === 0) {
-                updateStates(recipes);
-                listOfRecipes.innerHTML = "";
-                displayRecipes(recipes);
-                displayNbOfRecipes(recipes);
-            }
+    const tagASuggestion = document.createElement('p');
+    tagASuggestion.classList.add('filter-button');
+    tagASuggestion.textContent = item;
+    const closeTagButton = document.createElement("span");
+    const closeTagButtonIcon = document.createElement('i');
+    closeTagButtonIcon.classList.add("fa", "fa-xmark");
+    closeTagButton.appendChild(closeTagButtonIcon);
+    tagASuggestion.appendChild(closeTagButton);
+    listOfTags.appendChild(tagASuggestion);
+    state.keyword.push(item);
+    closeTagButton.addEventListener('click', function() {
+        tagASuggestion.remove();
+        state.keyword = state.keyword.filter((keyword) => {
+            return !keyword.toLowerCase().includes(item.toLowerCase());
         });
-        const recipeList = filterRecipesWithKeyWords();
-        updateStates(recipeList);
-        listOfRecipes.innerHTML = "";
-        displayRecipes(recipeList);
-        displayNbOfRecipes(filterAList(recipeList));
+        if (state.keyword.length >= 1 || listOfTags.innerHTML === "") {
+            let recipeList = filterRecipesWithKeyWords();
+            updateStates(recipeList);
+            listOfRecipes.innerHTML = "";
+            displayRecipes(filterAList(recipeList));
+            displayNbOfRecipes(filterAList(recipeList));
+        }
+        if (state.keyword.length === 0) {
+            updateStates(recipes);
+            listOfRecipes.innerHTML = "";
+            displayRecipes(recipes);
+            displayNbOfRecipes(recipes);
+        }
+    });
+    const recipeList = filterRecipesWithKeyWords();
+    updateStates(recipeList);
+    listOfRecipes.innerHTML = "";
+    displayRecipes(recipeList);
+    displayNbOfRecipes(filterAList(recipeList));
 }
 // Executes createATag function with the click on a suggestion
 function clickOnASuggestion(option, item) {
