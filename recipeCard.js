@@ -1,9 +1,8 @@
 //Creates card for a recipe
-export function recipeFactory(data) {
+export function recipeCard(data) {
     const { name, id, time, description, ingredientName, ingredientQuantity } = data;
     const ingredientsListData = [];
     const ingredients = data.ingredients;
-
     for (let i = 0; i < ingredients.length; i++) {
         const item = ingredients[i];
         const ingredientName = item.ingredient;
@@ -11,50 +10,70 @@ export function recipeFactory(data) {
         const ingredientUnit = item.unit;
         ingredientsListData.push({ ingredientName, ingredientQuantity, ingredientUnit });
     }
-
+    const picture = `recette${id}.jpg`;
+    const path = `img/${picture}`;
     function getRecipeCardDOM() {
-        const card = document.createElement("div");
+        const card = document.createElement("a");
+        card.setAttribute("href", "#");
         card.classList.add('list-recipes__card');
+        const imgContainer = document.createElement('div'); 
+        imgContainer.classList.add('list-recipes__container-up');
+        const img = document.createElement('img');
+        img.classList.add('list-recipes__img');
+        img.setAttribute("src", path);
+        const duration = document.createElement('p');
+        duration.classList.add('list-recipes__time');
+        duration.textContent = time + " min"; 
+        const recipeContainer = document.createElement('div'); 
+        recipeContainer.classList.add('list-recipes__container-down');
         const title = document.createElement("p");
         title.textContent = name;
         title.classList.add('list-recipes__title');
-        const durationContainer = document.createElement('div');
-        durationContainer.classList.add('list-recipes__time');
-        const iconContainer = document.createElement('span');
-        const iconTime = document.createElement('i');
-        iconTime.classList.add("fa", "fa-clock");
-        const duration = document.createElement('p');
-        duration.textContent = time + " min"; 
-        const foodContainer = document.createElement('div');
-        foodContainer.classList.add('list-recipes__ingredients');
+        const descriptionContainer = document.createElement('div');
+        descriptionContainer.classList.add('list-recipes__description-container');
+        const inscrutionsLabel = document.createElement('p');
+        inscrutionsLabel.classList.add('list-recipes__description-label');
+        inscrutionsLabel.textContent = "Recette";
+        const instructions = document.createElement("p");
+        instructions.classList.add('list-recipes__description');
+        instructions.textContent = description;
+        const ingredientsContainer = document.createElement('div');
+        ingredientsContainer.classList.add('list-recipes__ingredients');
+        const ingredientsContainerLabel = document.createElement('p');
+        ingredientsContainerLabel.classList.add('list-recipes__ingredients-label');
+        ingredientsContainerLabel.textContent = "Ingrédients";
+        ingredientsContainer.appendChild(ingredientsContainerLabel);
+        const ingredientsContainerContent = document.createElement('div');
+        ingredientsContainerContent.classList.add('list-recipes__ingredients-content');
         for (const ingredientData of ingredientsListData) {
-            const foodContent = document.createElement('div');
-            foodContent.classList.add('ingredient-content');
+            const ingredientContent = document.createElement('div');
+            ingredientContent.classList.add('ingredient-content');
             const foodName = document.createElement('p');
+            foodName.classList.add('ingredient-content__name');
             foodName.textContent = ingredientData.ingredientName;
-            const foodQuantity = document.createElement('p');
-            foodQuantity.textContent =  ": " + ingredientData.ingredientQuantity;
+            const quantityContainer = document.createElement('div');
+            quantityContainer.classList.add('ingredient-content__quantity');
+            const nbQuantity = document.createElement('p');
+            nbQuantity.textContent = ingredientData.ingredientQuantity;
             const unit = document.createElement('p');
             unit.textContent = ingredientData.ingredientUnit;
-            foodContent.appendChild(foodName);
-            foodContent.appendChild(foodQuantity);
-            foodContent.appendChild(unit);
-            foodContainer.appendChild(foodContent);
+            quantityContainer.appendChild(nbQuantity);
+            quantityContainer.appendChild(unit);
+            ingredientContent.appendChild(foodName);
+            ingredientContent.appendChild(quantityContainer);
+            ingredientsListData.appendChild(ingredientContent);
         }
-        const instructionContainer = document.createElement("div");
-        instructionContainer.textContent = description;
-        instructionContainer.classList.add('list-recipes__description');
-        iconContainer.appendChild(iconTime);
-        durationContainer.appendChild(iconContainer);
-        durationContainer.appendChild(duration);
-        card.appendChild(foodContainer);
-        card.appendChild(instructionContainer);
-        card.appendChild(durationContainer);
-        card.appendChild(title);
+        imgContainer.appendChild(duration);
+        imgContainer.appendChild(img);
+        descriptionContainer.appendChild(inscrutionsLabel);
+        descriptionContainer.appendChild(instructions);
+        ingredientsContainer.appendChild(ingredientsContainerContent);
+        recipeContainer.appendChild(title);
+        recipeContainer.appendChild(descriptionContainer)
+        recipeContainer.appendChild(ingredientsContainer);
+        card.appendChild(imgContainer);
+        card.appendChild(recipeContainer);
         return (card)
     }
-    
-
     return { name, id, time, description, ingredientsListData, ingredientName, ingredientQuantity, getRecipeCardDOM}
 }
-
