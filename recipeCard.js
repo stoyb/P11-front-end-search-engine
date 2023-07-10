@@ -21,6 +21,7 @@ export function recipeCard(data) {
         const img = document.createElement('img');
         img.classList.add('list-recipes__img');
         img.setAttribute("src", path);
+        img.setAttribute("alt", name);
         const duration = document.createElement('p');
         duration.classList.add('list-recipes__time');
         duration.textContent = time + " min"; 
