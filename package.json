@@ -1,0 +1,22 @@
+{
+  "name": "p11-front-end-search-engine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "recipeCard.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stoyb/P11-front-end-search-engine.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stoyb/P11-front-end-search-engine/issues"
+  },
+  "homepage": "https://github.com/stoyb/P11-front-end-search-engine#readme",
+  "devDependencies": {
+    "eslint": "^8.44.0"
+  }
+}
