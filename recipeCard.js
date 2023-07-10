@@ -61,7 +61,7 @@ export function recipeCard(data) {
             quantityContainer.appendChild(unit);
             ingredientContent.appendChild(foodName);
             ingredientContent.appendChild(quantityContainer);
-            ingredientsListData.appendChild(ingredientContent);
+            ingredientsContainerContent.appendChild(ingredientContent);
         }
         imgContainer.appendChild(duration);
         imgContainer.appendChild(img);
