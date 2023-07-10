@@ -9,27 +9,27 @@ header {
 }
 .hero__logo {
     width: 200px;
-    height:25px;
+    height: 25px;
     margin: 60px;
 }
 header h1 {
     max-width: 680px;
     font-family: Anton;
-    margin-top: 100px;
+    margin-top:100px;
     letter-spacing: 1px;
 }
 .search-recipe {
     margin-bottom: 160px;
 }
-#search-recipe__input {
+#search-recipe___input {
     font-family: Manrope;
-    height: 60px;
-    width: 66%;
+    height:60px;
+    width:66%;
 }
 #search-recipe__icon {
     float: right;
-    bottom: 56px;
-    right: 17.75%;
+    bottom:56px;
+    right:17.75%;
     padding: 10px 14px;
 }
 #input-ingredients__chevron-down, #input-ingredients__chevron-up, #input-appliance__chevron-up, #input-appliance__chevron-down, #input-utensils__chevron-down, #input-utensils__chevron-up {
@@ -43,6 +43,10 @@ header h1 {
 }
 #input-ingredients__chevron-up, #input-appliance__chevron-up, #input-utensils__chevron-up {
     display: none;
+}
+
+.filter-button span {
+    cursor: pointer;
 }
 main {
     padding: 0 90px;
@@ -174,7 +178,6 @@ li {
     display: grid;
     grid-template-columns: 1fr 1fr; 
 }
-
 .ingredient-content__name {
     font-weight: 700;
 }
@@ -216,6 +219,9 @@ li {
     #container__form {
         width: 84%;
     }
+    .list-recipes__time{
+        left:72%;
+    }
     .list-recipes{
         grid-template-columns: 1fr 1fr 1fr;
     }
@@ -224,8 +230,6 @@ li {
         padding: 9px 14px;
         right:17.25%
     }
-    .list-recipes__time{
-        left:72%;
-    }
 }
+
 
