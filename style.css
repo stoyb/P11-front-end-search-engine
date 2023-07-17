@@ -99,7 +99,7 @@ li {
 #list-tags {
     padding-top: 240px;
 }
-.filter-button {
+.filter-tag {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -110,7 +110,7 @@ li {
     min-width: 120px;
     width: 15%;
 }
-.filter-button span {
+.filter-tag span {
     cursor: pointer;
 }
 /* Recipes */
