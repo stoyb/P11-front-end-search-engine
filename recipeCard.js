@@ -64,7 +64,7 @@ export function recipeCard(data) {
               ingredientContent.appendChild(quantityContainer);
               container.appendChild(ingredientContent);
             });
-          };
+        };
         ingredientsListData.createIngredientElements(ingredientsContainerContent);
         imgContainer.appendChild(duration);
         imgContainer.appendChild(img);
