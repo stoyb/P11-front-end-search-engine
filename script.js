@@ -1,14 +1,13 @@
                             /* Variables and constants */
 import { recipes } from "/recipes.js";
 import { recipeCard } from "/recipeCard.js";
+import { listOfRecipes, searchRecipe, nbRecipesAll, nbRecipes, lastRecipeId } from "./variables.js";
+import { blocIngredients, blocAppliance, blocUtensils } from "./variables.js";
 import { ingredientsSearchBar, ingredientsSuggestionsList, applianceSearchBar,
-    applianceSuggestionsList, utensilsSearchBar, utensilsSuggestionsList,
-    listOfRecipes, searchRecipe, listOfTags,
-    nbRecipesAll, nbRecipes, lastRecipeId,
-    downChevronIngredients, downChevronAppliance, downChevronUtensils,
-    blocIngredients, blocAppliance, blocUtensils,
-    upChevronIngredients, upChevronAppliance, upChevronUtensils
-} from "./variables.js";
+    applianceSuggestionsList, utensilsSearchBar, utensilsSuggestionsList } from "./variables.js";
+import { downChevronIngredients, downChevronAppliance, downChevronUtensils,
+    upChevronIngredients, upChevronAppliance, upChevronUtensils } from "./variables.js";
+import { listOfTags } from "./variables.js";
 //Number of recipes in ListOfRecipes
 nbRecipesAll.innerHTML = lastRecipeId;
 // Create the filtered lists of filters 
@@ -168,6 +167,7 @@ function getRecipesWithSearchBar() {
     }
     return recipesResult
 }
+const exportedListSearchBar = getRecipesWithSearchBar();
 // Gets all ingredients inside each recipe (with occurrences)
 function getAllIngredients(recipes) {
     const ingredientsAll = [];
@@ -246,8 +246,7 @@ function createATag(item) {
             return !keyword.toLowerCase().includes(item.toLowerCase());
         });
         if (state.keyword.length >= 1 || listOfTags.innerHTML === "") {
-            const exportedRecipes = getRecipesWithSearchBar();
-            let recipeList = filterRecipesWithKeyWords(exportedRecipes);
+            let recipeList = filterRecipesWithKeyWords(exportedListSearchBar);
             updateStates(recipeList);
             listOfRecipes.innerHTML = "";
             displayRecipes(filterAList(recipeList));
@@ -260,8 +259,7 @@ function createATag(item) {
             displayNbOfRecipes(recipes);
         }
     });
-    const exportedRecipes = getRecipesWithSearchBar();
-    let recipeList = filterRecipesWithKeyWords(exportedRecipes);
+    let recipeList = filterRecipesWithKeyWords(exportedListSearchBar);
     updateStates(recipeList);
     listOfRecipes.innerHTML = "";
     displayRecipes(recipeList);
