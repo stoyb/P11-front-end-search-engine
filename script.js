@@ -151,10 +151,12 @@ function changeAllStates(recipes) {
 }
 // Gets and displays recipes asked only with the search bar
 function inlineBlockStyleRecipesList() {
-    listOfRecipes.style.display == "inline-block" 
+    listOfRecipes.classList.remove('list-recipes')
+    listOfRecipes.classList.add('list-recipes--inline-block')
 }
 function gridStyleRecipesList() {
-    listOfRecipes.style.display == "grid" 
+    listOfRecipes.classList.remove('list-recipes--inline-block')
+    listOfRecipes.classList.add('list-recipes')
 }
 function getRecipesWithSearchBar() {
     const searchValue = searchRecipe.value.toLowerCase();
