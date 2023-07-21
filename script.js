@@ -143,7 +143,6 @@ function filterRecipesWithKeyWords(recipesListResults) {
     }
     return filteredListOfRecipes
 }
-const exportedListSearchBar = getRecipesWithSearchBar();
 // Changes all the three filters' states 
 function changeAllStates(recipes) {
     state.ingredients = filterAList(getUniqueItems(getAllIngredients, state.ingredients, recipes));
@@ -241,6 +240,7 @@ function getRecipesWithSearchBar() {
     }
     return recipesResult
 }
+const exportedListSearchBar = getRecipesWithSearchBar();
 // Gets all ingredients inside each recipe (with occurrences)
 function getAllIngredients(recipes) {
     const ingredientsAll = [];
