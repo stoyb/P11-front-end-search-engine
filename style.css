@@ -114,10 +114,15 @@ li {
     cursor: pointer;
 }
 /* Recipes */
-.list-recipes {
-    display: grid;  
+.list-recipes, .list-recipes--inline-block {  
     grid-template-columns: 1fr;
     column-gap: 3%;
+}
+.list-recipes {
+    display: grid;
+}
+.list-recipes--inline-block {
+    display: inline-block;
 }
 .list-recipes__container-up {
     position: relative;
