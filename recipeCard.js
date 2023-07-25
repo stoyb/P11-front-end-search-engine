@@ -9,7 +9,7 @@ export function recipeCard(data) {
             return { ingredientName, ingredientQuantity, ingredientUnit }
         }
     ); 
-    const picture = `recette${id}.jpg`;
+    const picture = `img${id}.jpg`;
     const path = `img/${picture}`;
     function getRecipeCardDOM() {
         const card = document.createElement("a");
