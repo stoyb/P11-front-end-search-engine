@@ -156,11 +156,11 @@ function getRecipesWithSearchBar() {
     state.utensils.splice(0, state.utensils.length);
     changeAllStates(recipesResult)
     if (searchValue.length == 0 && listOfTags.innerHTML === "") {
-        updateStates(recipes)
+        changeAllStates(recipes)
         listOfRecipes.innerHTML = "";
         displayRecipes(recipes);
         displayNbOfRecipes(recipes);
-        if (listOfRecipes.style.display == "inline-block") {
+        if (listOfRecipes.className == 'list-recipes--inline-block') {
             gridStyleRecipesList();
         }
         state.keyword = [];
@@ -170,7 +170,7 @@ function getRecipesWithSearchBar() {
         listOfRecipes.innerHTML = "";
         displayRecipes(recipesResult);
         displayNbOfRecipes(recipesResult);
-        if (listOfRecipes.style.display == "inline-block") {
+        if (listOfRecipes.className == 'list-recipes--inline-block') {
             gridStyleRecipesList();
         }
         const updatedKeyword = [];
@@ -351,7 +351,7 @@ function createATag(item) {
     const recipeList = filterRecipesWithKeyWords(listRecipe);
     updateStates(recipeList);
     listOfRecipes.innerHTML = "";
-    displayRecipes(recipeList);
+    displayRecipes(filterAList(recipeList));
     displayNbOfRecipes(filterAList(recipeList));
 }
 // Executes createATag function with the click on a suggestion
