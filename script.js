@@ -110,7 +110,7 @@ function gridStyleRecipesList() {
     listOfRecipes.classList.remove('list-recipes--inline-block')
     listOfRecipes.classList.add('list-recipes')
 }
-let itemBar = [];
+let itemBar = []; // searchRecipes content's
 function getRecipesWithSearchBar() {
     const searchValue = searchRecipe.value.toLowerCase();
     const listRecipe = selectRecipes(searchValue);
