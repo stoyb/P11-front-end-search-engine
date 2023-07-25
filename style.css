@@ -97,7 +97,10 @@ li {
 }
 /* Tags */
 #list-tags {
+    display: flex;
+    column-gap: 4%;
     padding-top: 240px;
+
 }
 .filter-button {
     display: flex;
@@ -114,12 +117,13 @@ li {
     cursor: pointer;
 }
 /* Recipes */
-.list-recipes, .list-recipes--inline-block {
-    grid-template-columns: 1fr;
+.list-recipes--grid, .list-recipes--inline-block {
+    
     column-gap: 3%;
 }
-.list-recipes {
+.list-recipes--grid {
     display: grid;  
+    grid-template-columns: 1fr 1fr 1fr;
 }
 .list-recipes--inline-block {
     display: inline-block;
