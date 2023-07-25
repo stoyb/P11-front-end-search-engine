@@ -98,6 +98,8 @@ li {
 /* Tags */
 #list-tags {
     padding-top: 240px;
+    display: grid;
+    column-gap: 0;
 }
 .filter-button {
     display: flex;
@@ -213,6 +215,8 @@ li {
     }
     #list-tags {
         padding-top: 120px;
+        display: flex;
+        column-gap: 4%;
     }
     #container__form {
         width: 77%;
