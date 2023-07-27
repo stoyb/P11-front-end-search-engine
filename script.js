@@ -45,6 +45,35 @@ function displayNbOfRecipes(recipes) {
         nbRecipes.innerHTML = 1 + " recette";
     }
 }
+// Deletes item inside searchBar on state.keyword
+function deleteItemSearchBar() {
+    state.keyword = state.keyword.filter((item) => {
+        return item != itemBar[0]
+    });
+    itemBar = [];
+    listOfRecipes.innerHTML = " ";
+    const recipesRes = filterRecipesWithKeyWords(recipes);
+    displayRecipes(filterAList(recipesRes));
+    displayNbOfRecipes(filterAList(recipesRes));
+}
+// Adds cross to delete word on the input
+function deleteWord() {
+    const searchRecipeDeleteWord = document.querySelector('.search-recipe__word');
+    if (document.activeElement === searchRecipe) {
+        searchRecipeDeleteWord.classList.add('search-recipe--delete');
+        searchRecipeDeleteWord.classList.remove('search-recipe__word');
+    }
+}
+// Deletes cross to delete word on the input
+function deleteCross() {
+    const searchRecipeDeleteWord = document.querySelector('.search-recipe--delete');
+    if (searchRecipeDeleteWord.className == "search-recipe--delete" ) {
+        searchRecipeDeleteWord.classList.add('search-recipe__word');
+        searchRecipeDeleteWord.classList.remove('search-recipe--delete');
+        searchRecipe.value = "";
+        deleteItemSearchBar()
+    }
+}
 // Removes the occurrences 
 function filterAList(list) {
     const uniqueItems = [...new Set(list)];
@@ -62,16 +91,10 @@ function displayRecipes(recipes) {
 function selectRecipes(item) {
     const itemRecipe = item.toLowerCase();
     const filteredRecipes = recipes.filter(element =>
-        element.name.toLowerCase().startsWith(itemRecipe) || element.name.toLowerCase().includes(itemRecipe) || element.name.toLowerCase().includes(" " + itemRecipe + " ") || element.name.toLowerCase().endsWith(itemRecipe + " ")
-    ).concat(
-        recipes.filter(element =>
-            element.description.toLowerCase().startsWith(itemRecipe) || element.description.toLowerCase().includes(" " + itemRecipe + " ") || element.description.toLowerCase().endsWith(itemRecipe)
-        )
-    ).concat(
-        recipes.filter(element =>
-            element.ingredients.some(ingredient =>
-                ingredient.ingredient.toLowerCase().startsWith(itemRecipe + " ") || ingredient.ingredient.toLowerCase().includes(" " + itemRecipe + " ") || ingredient.ingredient.toLowerCase().endsWith(itemRecipe)
-            )
+        element.name.toLowerCase().includes(itemRecipe.trim())
+        ||element.description.toLowerCase().includes(itemRecipe.trim())
+        ||element.ingredients.some(ingredient =>
+            ingredient.ingredient.toLowerCase().includes(itemRecipe.trim())
         )
     );
     return filteredRecipes;
@@ -82,19 +105,16 @@ function filterRecipesWithKeyWords(recipesListResults) {
             const lowerCaseKeyword = keyword.toLowerCase();
             return (
                 recipe.ingredients.some(ingredient =>
-                    ingredient.ingredient.toLowerCase().includes(" " + lowerCaseKeyword + " ") ||
-                    ingredient.ingredient.toLowerCase().startsWith(lowerCaseKeyword + " ") ||
-                    ingredient.ingredient.toLowerCase().endsWith(lowerCaseKeyword)
+                    ingredient.ingredient.toLowerCase().includes(lowerCaseKeyword.trim())
                 ) ||
-                recipe.name.toLowerCase().includes(lowerCaseKeyword) ||
-                recipe.description.toLowerCase().includes(" " + lowerCaseKeyword) ||
-                recipe.appliance.toLowerCase().includes(lowerCaseKeyword) ||
-                recipe.ustensils.some(item => item.toLowerCase().includes(lowerCaseKeyword))
+                recipe.name.toLowerCase().includes(lowerCaseKeyword.trim()) ||
+                recipe.description.toLowerCase().includes(lowerCaseKeyword.trim()) ||
+                recipe.appliance.toLowerCase().includes(lowerCaseKeyword.trim()) ||
+                recipe.ustensils.some(item => item.toLowerCase().includes(lowerCaseKeyword.trim()))
             );
         });
     });
 }
-
 // Changes all the three filters' states 
 function changeAllStates(recipes) {
     state.ingredients = getUniqueItems(getAllIngredients, state.ingredients, recipes);
@@ -150,14 +170,7 @@ function getRecipesWithSearchBar() {
         if (listOfRecipes.className == "list-recipes--inline-block") {
             gridStyleRecipesList();
         }
-        state.keyword = state.keyword.filter((item) => {
-            return item != itemBar[0]
-        });
-        itemBar = [];
-        listOfRecipes.innerHTML = " ";
-        const recipesRes = filterRecipesWithKeyWords(recipes);
-        displayRecipes(filterAList(recipesRes));
-        displayNbOfRecipes(filterAList(recipesRes));
+        deleteItemSearchBar()
         } else if (searchValue.length >= 3) {
         listRecipe.forEach((item) => {
             const itemName = item.name.toLowerCase();
@@ -342,5 +355,7 @@ addInputAndFocusEventListeners(ingredientsSearchBar);
 addInputAndFocusEventListeners(applianceSearchBar);
 addInputAndFocusEventListeners(utensilsSearchBar);
 searchRecipe.addEventListener("input", getRecipesWithSearchBar);
+searchRecipe.addEventListener('focus', deleteWord);
+searchRecipe.addEventListener('blur', deleteCross);
 displayRecipes(recipes);
 displayNbOfRecipes(recipes);
