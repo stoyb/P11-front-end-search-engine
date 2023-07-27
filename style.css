@@ -33,6 +33,16 @@ header h1 {
     height:60px;
     width:66%;
 }
+.search-recipe__word {
+    display: none;
+}
+.search-recipe--delete {
+    display: inline-block;
+    position: relative;
+    bottom:40px;
+    margin-left:62%;
+    color: var(--color-02);
+}
 #search-recipe__icon {
     float: right;
     bottom:56px;
@@ -232,6 +242,9 @@ li {
     .list-recipes__time{
         left:68%;
     }
+    .search-recipe--delete {
+        margin-left:73%;
+    }
 }
 @media(min-width:992px) {
     #list-tags {
@@ -250,6 +263,9 @@ li {
         bottom: 56.75px;
         padding: 9px 14px;
         right:17.25%
+    }
+    .search-recipe--delete {
+        margin-left:76%;
     }
 }
 

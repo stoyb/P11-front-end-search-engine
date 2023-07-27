@@ -43,6 +43,40 @@ function displayNbOfRecipes(recipes) {
         nbRecipes.innerHTML = 1 + " recette";
     }
 }
+// Deletes item inside searchBar on state.keyword
+function deleteItemSearchBar() {
+    const updatedKeyword = [];
+        for (let i = 0; i < state.keyword.length; i++) {
+            const keyword = state.keyword[i];
+            if (keyword != itemBar[0]) {
+                updatedKeyword.push(keyword);
+            }
+        }
+        state.keyword = updatedKeyword;
+        itemBar = [];
+        listOfRecipes.innerHTML = " ";
+        const recipesRes = filterRecipesWithKeyWords(recipes);
+        displayRecipes(filterAList(recipesRes));
+        displayNbOfRecipes(filterAList(recipesRes));
+}
+// Adds cross to delete word on the input
+function deleteWord() {
+    const searchRecipeDeleteWord = document.querySelector('.search-recipe__word');
+    if (document.activeElement === searchRecipe) {
+        searchRecipeDeleteWord.classList.add('search-recipe--delete');
+        searchRecipeDeleteWord.classList.remove('search-recipe__word');
+    }
+}
+// Deletes cross to delete word on the input
+function deleteCross() {
+    const searchRecipeDeleteWord = document.querySelector('.search-recipe--delete');
+    if (searchRecipeDeleteWord.className == "search-recipe--delete" ) {
+        searchRecipeDeleteWord.classList.add('search-recipe__word');
+        searchRecipeDeleteWord.classList.remove('search-recipe--delete');
+        searchRecipe.value = "";
+        deleteItemSearchBar()
+    }
+}
 // Removes the occurrences 
 function filterAList(list) {
     const uniqueItems = [...new Set(list)];
@@ -71,17 +105,17 @@ function selectRecipes(item) {
         let nameFounded = false;
         let ingredientsFounded = false;
         let descriptionFounded = false;
-        if (recipeName.includes(itemRecipe) || recipeName.includes(" " + itemRecipe + " ") || recipeName.endsWith(itemRecipe)) {
+        if (recipeName.includes(itemRecipe.trim())) {
             nameFounded = true;
         }
         for (let j = 0; j < recipeIngredients.length; j++) {
             const ingredient = recipeIngredients[j].ingredient.toLowerCase();
-            if (ingredient.startsWith(itemRecipe + " ") || ingredient.includes(" " + itemRecipe + " ") || ingredient.endsWith(itemRecipe)) {
+            if (ingredient.includes(itemRecipe.trim())) {
                 ingredientsFounded = true;
                 break; 
             }
         }
-        if (recipeDescription.startsWith(itemRecipe) || recipeDescription.includes(" " + itemRecipe + " ") || recipeDescription.endsWith(itemRecipe)) {
+        if (recipeDescription.includes(" " + itemRecipe.trim())) {
             descriptionFounded = true;
         }
         if (nameFounded || ingredientsFounded || descriptionFounded) {
@@ -100,12 +134,12 @@ function filterRecipesWithKeyWords(recipesListResults) {
             const keyword = state.keyword[j].toLowerCase();
             if (
                 !recipe.ingredients.some(ingredient =>
-                    ingredient.ingredient.toLowerCase().includes(" " + keyword.toLowerCase() + " ") || ingredient.ingredient.toLowerCase().startsWith(keyword.toLowerCase() + " ") || ingredient.ingredient.toLowerCase().endsWith(keyword.toLowerCase())
+                    ingredient.ingredient.toLowerCase().includes(keyword.trim())
                 ) &&
-                !recipe.name.toLowerCase().includes(keyword) &&
-                !recipe.description.toLowerCase().includes((" " + keyword)) &&
-                !recipe.appliance.toLowerCase().includes( keyword + " ") &&
-                !recipe.ustensils.some(item => item.toLowerCase().includes(keyword))
+                !recipe.name.toLowerCase().includes(keyword.trim()) &&
+                !recipe.description.toLowerCase().includes((keyword.trim())) &&
+                !recipe.appliance.toLowerCase().includes(keyword.trim()) &&
+                !recipe.ustensils.some(item => item.toLowerCase().includes(keyword.trim()))
             ) {
                 isMatching = false;
                 break;
@@ -173,19 +207,7 @@ function getRecipesWithSearchBar() {
         if (listOfRecipes.className == 'list-recipes--inline-block') {
             gridStyleRecipesList();
         }
-        const updatedKeyword = [];
-        for (let i = 0; i < state.keyword.length; i++) {
-            const keyword = state.keyword[i];
-            if (keyword != itemBar[0]) {
-                updatedKeyword.push(keyword);
-            }
-        }
-        state.keyword = updatedKeyword;
-        itemBar = [];
-        listOfRecipes.innerHTML = " ";
-        const recipesRes = filterRecipesWithKeyWords(recipes);
-        displayRecipes(filterAList(recipesRes));
-        displayNbOfRecipes(filterAList(recipesRes));
+        deleteItemSearchBar()
     } else if (searchValue.length >= 3) { 
         for (let i = 0; i < listRecipe.length; i++) {
             const item = listRecipe[i];
@@ -421,5 +443,7 @@ addInputAndFocusEventListeners(ingredientsSearchBar);
 addInputAndFocusEventListeners(applianceSearchBar);
 addInputAndFocusEventListeners(utensilsSearchBar);
 searchRecipe.addEventListener("input", getRecipesWithSearchBar);
+searchRecipe.addEventListener('focus', deleteWord);
+searchRecipe.addEventListener('blur', deleteCross);
 displayRecipes(recipes);
 displayNbOfRecipes(recipes);
